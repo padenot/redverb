@@ -1,0 +1,42 @@
+\author{Paul ADENOT -- Yannick MEINE -- Gael MOTTE \\ Armand ROSSIUS -- Nicolas SILVA }
+%\title{Références croisées sur un ensemble de fichiers en \texttt{C++}}
+\title{D\'{e}veloppement d'un effet de r\'{e}verb\'{e}ration par convolution\\Cahier des charges}
+\input{include.tex}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Le projet}
+Dans le cadre du projet «Fil rouge» proposé par les enseignant en informatique de l'INSA de Lyon, nous nous proposons de développer un effet de réverbération par convolution.
+
+~\\
+La réverbération par convolution utilise le procédé mathématique du même nom pour produire, à partir d'une réponse impulsionelle (sous la forme d'un fichier .WAV, et enregistré à partir de l'acoustique d'un lieu ou de la réponse d'un équipement audio) et d'une piste audio (aussi sous la forme d'un fichier .WAV) un signal de sortie correspondant au second signal «mélangé» au premier, de sorte que la seconde piste audio (souvent le son d'un instrument) apparait traité par l'acoustique du lieu ou l'effet de l'équipement audio. Ce procédé permet donc de s'affranchir du traitement acoustique du lieu d'enregistrement ou de l'achat d'équipement dédiés, souvent couteux.
+
+~\\
+Le logiciel développé aura la forme d'un plugin, écrit en {\tt C++}, sera compatible avec la majorité des logiciels de musique assisté par ordinateur (MAO), parce qu'utilisant le Software Developpement Kit (SDK) Virtual Studio Technology (VST), créé par Steinberg, célèbre entreprise dans le domaine de l'audionumérique. Ce SDK est \emph{de facto} un standard dans le monde de la MAO, et son utilisation est gratuite. 
+
+~\\
+La convolution étant une opération couteuse au point de vue temps CPU, nous nous proposons d'effectuer le calcul sur le processeur graphique de la machine (le GPU), qui est particulièrement optimisé sur le calcul en flottant massivement parallélisé, ce qui correspond tout à fait à la convolution. Cela permettra d'alléger le CPU lors de l'utilisation de multiple instances du plugin dans le programme hôte, et de proposer une latence imperceptible lors de l'enregistrement et du jeu en direct dans l'interface audionumérique de la machine.
+
+~\\
+Cinq personnes feront partie du projet, se répartissant les tâches en fonction de leurs affinités avec les technologies utilisées.
+Le projet sera libre, et placé sous licence GPLv2.
+\section{Technologies}
+\subsection{VST SDK}
+Le VST DSK est un ensemble de classes {\tt C++} reposant sur une interface de programmation (API) sous-jacente écrite en C. Cela permettra un développement aisé, puisque orienté objet. De plus, ce SDK fournie une abstraction matérielle complète, ainsi qu'une abstraction logicielle, puisque son fonctionnement est garanti avec bon nombre de logiciels hôtes. Nous pourrons alors nous concentrer sur l'écriture des algorithmes, tout en étant sûr du fonctionnement du logiciel en dehors de notre environnement de test.
+
+~\\
+Le plugin aura besoin d'une interface graphique conviviale, qui devra être développée, le SDK ne proposant que des primitives pour des \emph{widgets} basiques tels que des boutons ou des potentiomètres. Nous utiliserons pour cela la bibliothèque libre (sous les termes de la BSD License) VSTGUI (\url{http://sourceforge.net/projects/vstgui/}), qui propose une interface de développement d'interface graphique de plus haut niveau.
+\subsection{Calcul sur GPU}
+Le logiciel utilisera une solution logicielle permettant de réaliser le calcul sur le GPU, et donc de diminuer la charge processeur.
+À l'écriture de ces lignes, nous devons encore choisir entre deux solutions, OpenCL du Khronos Group ou CUDA de nVidia.
+\paragraph{OpenCL}
+
+\paragraph{CUDA}
+(Compute Unified Device Architecture) est disponible sur les carte graphique nVidia Geforce 8 series et postérieures. Cela veut dire qu'il faut obligatoirement une carte graphique satisfaisant cette spécification pour que le calcul soit possible. Cette technologie est mature, puisque la version 2 est considérée comme stable et la version 3 disponible en beta.
+~\\
+CUDA est un ajout au langage C, proposant quelques fonctions pour travailler sur la carte graphique, et quelques ajouts syntaxique afin de contrôler au mieux la gestion du calcul en parallèle.
+~\\
+C'est une technologie propriétaire, les sources du compilateur {\tt ncc} n'étant pas disponibles.
+\section{Cahier des charges}
+\end{document}
+
