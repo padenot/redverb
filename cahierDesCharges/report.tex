@@ -1,58 +1,85 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % TODO
 %	enlever le titre mis en commentaire? ^^
+%	    Paul : OK
 %	définir l'espace entre paragraphes et éviter l'artifice du saut de ligne
 %	utiliser la commande "\and" dans la liste des auteurs?
+%	    Paul : OK
 %	définir un guide de style pour la présentation du document
+%	    Paul : C'est pas la première priorité, et c'est en partie fait grâce 
+%	    au fichier include
 %	pourquoi ne pas utiliser directement les accents dans le titre?
+%	    Paul : OK (le fichier include qui précise l'encodage était plus bas
+%		   et j'avais pas vraiment le temps de chercher quand j'ai fait
+%		   ça.
 %	mettre le document en cours de rédaction (draft - partie include)
+%	    Paul : OK
 %	distinction explicite micro-processeur central/graphique
-%	pour chaque composant (de réalisation) externe (modules urilisés), définir
-%		quelle spécification en question est respectée, et quelle implémentation
-%		(par exemple pour les SDK)
+%	pour chaque composant (de réalisation) externe (modules utilisés), définir
+%	quelle spécification en question est respectée, et quelle implémentation
+%	(par exemple pour les SDK)
+%	    Paul : Tu peux préciser ?
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-\author{Paul ADENOT -- Yannick MEINE -- Gael MOTTE \\ Armand ROSSIUS -- Nicolas SILVA }
-%\title{Références croisées sur un ensemble de fichiers en \texttt{C++}}
-\title{D\'{e}veloppement d'un effet de r\'{e}verb\'{e}ration par convolution\\Cahier des charges}
 \input{include.tex}
+\author{Paul ADENOT \and Yannick MEINE \and Gael MOTTE \and Armand ROSSIUS \and Nicolas SILVA }
+\title{Développement d'un effet de réverbération par convolution\\Cahier des charges}
 \begin{document}
 \maketitle
 \tableofcontents
+\vspace{2cm}
+\begin{center}
+    \includegraphics{insalogo.pdf}
+\end{center}
+\newpage
 \section{Le projet}
 Dans le cadre du projet «Fil rouge» proposé par les enseignants du département informatique de l'INSA de Lyon, nous nous proposons de développer un effet de réverbération par convolution.
 
-~\\
-% réponse impulsionnelle : signal sortie d'un système en réaction à une signal impulsionnel ; ici nos signaux sont des ondes sonores
-% une impulsion est mathématiquement parlant une onde sans harmonique et très brès - point à développer
-% la sortie doit ici représenter la configuration acoustique de la pièce
+% réponse impulsionnelle : signal sortie d'un système en réaction à une signal impulsionnelle ; ici nos signaux sont des ondes sonores
+%Paul : OK
+% une impulsion est mathématiquement parlant une onde sans harmonique et très bref - point à développer
+% Paul : C'est pas un traité de traitement du signal non plus, on peu rester bref, c'est juste un document de présentation
+% la sortie doit ici représenter la configuration acoustique de la pièce 
+% OK
 % un fichier .WAV ne signifie rien : il exite différents formats de codage audionumérique regroupés autour de l'extension wav.
-% Préciser simplement : "sous forme numérique" - c'est ce qui nous importe ici, plutôt que "sous la forme d'un fichier .WAV)
+% Préciser simplement : "sous forme numérique" - c'est ce qui nous importe ici, plutôt que "sous la forme d'un fichier .WAV) 
+%OK
 %
-% \subsection{principe}
-La réverbération par convolution utilise le procédé mathématique du même nom pour produire, à partir d'une réponse impulsionnelle (sous la forme d'un fichier .WAV, et enregistré à partir de l'acoustique d'un lieu ou de la réponse d'un équipement audio) et d'une piste audio (aussi sous la forme d'un fichier .WAV) un signal de sortie correspondant au second signal «mélangé» au premier, de sorte que la seconde piste audio (souvent le son d'un instrument) apparaise traitée par l'acoustique du lieu ou l'effet de l'équipement audio. Ce procédé permet donc de s'affranchir du traitement acoustique du lieu d'enregistrement ou de l'achat d'équipement dédié, souvent couteux.
+\subsection{Principe}
+La réverbération par convolution utilise le procédé mathématique du même nom pour produire, à partir d'une réponse impulsionnelle et d'un autre signal, un signal de sortie correspondant au second signal «mélangé» au premier.
+Une réponse impulsionnelle est la sortie d'un système (dans notre cas un lieu ou un équipement audio) en réaction à un signal impulsionnel. Dans le cadre de ce projet, tous les signaux sont des ondes sonores.
+Signal impulsionnel : mathématiquement, c'est une onde sans harmonique et très brève. En pratique, on utilise l'éclatement d'un ballon de baudruche ou un pistolet starter.
 
-~\\
-% définition d'un plugin, de la MAO, d'un SDK et d'un VST.
+Dans le cadre du projet, la réponse impulsionnelle sera l'enregistrement de la réverbération produite par un lieu réel ou un équipement audioumérique.
+Le second signal d'entrée sera la piste audio à traiter.
+
+Ce traitement permettra d'appliquer au second signal d'entré l'effet de réverbération du lieu ou de l'équipement du premier signal d'entrée.
+
+
+% définition d'un plugin (OK), de la MAO (OK), d'un SDK  et d'un VST (OK -> c'est un plugin).
 % quelle spécification du langage et sous quelle implémentation?
 % Références : Steinberg, VST
 % Licence d'utilisation du SDK VST 2.4
-%
-% \subsection{Architecture logicielle}
-Le logiciel développé aura la forme d'un plugin, écrit en {\tt C++}, sera compatible avec la majorité des logiciels de musique assistée par ordinateur (MAO), parce qu'utilisant le Software Development Kit (SDK) Virtual Studio Technology (VST), créé par Steinberg, célèbre entreprise dans le domaine de l'audionumérique. Ce SDK est \emph{de facto} un standard dans le monde de la MAO, et son utilisation est gratuite.
 
-~\\
-% \subsection{Convolution}
+\subsection{Architecture logicielle}
+Le logiciel développé aura la forme d'un plugin (logiciel dépendant d'un logiciel hôte, qui, le plus souvent, lui ajoute des fonctionnalités), écrit en {\tt C++}, sera compatible avec la majorité des logiciels de musique assistée par ordinateur (MAO), parce qu'utilisant le Software Development Kit (SDK)\footnote{Kit de développement logiciel, ensemble d'outil fourni par un éditeur à destination des développeurs pour rendre possible la création d'applications sur un support donné}  Virtual Studio Technology (VST), créé par Steinberg, célèbre entreprise dans le domaine de l'audionumérique. Ce SDK est \emph{de facto} un standard dans le monde de la MAO, et son utilisation est gratuite.
+
 La convolution étant une opération coûteuse au point de vue temps CPU, nous nous proposons d'effectuer le calcul sur le processeur graphique de la machine (le GPU), qui est particulièrement optimisé pour le calcul en virgule flottante massivement parallélisé, ce qui correspond tout à fait à la convolution. Cela permettra d'alléger le CPU lors de l'utilisation de multiple instances du plugin dans le programme hôte, et de proposer une latence imperceptible lors de l'enregistrement et du jeu en direct dans l'interface audionumérique de la machine.
 
-~\\
-Cinq personnes feront partie du projet, se répartissant les tâches en fonction de leurs affinités avec les technologies utilisées.
+\subsection{Gestion de projet}
+Cinq personnes feront partie du projet, se répartissant les tâches en fonction de leurs affinités avec les technologies utilisées. Les répartitions sont d'hors et déjà faites.
 Le projet sera libre, et placé sous licence GPLv2.
+
+
 \section{Technologies}
+\subsection{Langage {\tt C++}}
+Bien qu'il soit possible de programmer avec le SDK VST dans bon nombre de langages, nous avons choisi le {\tt C++} car il est d'un part très rapide (la rapidité étant la caractéristique principale de choix), d'autre part compatible nativement avec des solutions de calcul sur GPU. De plus, tous les membres du projet connaissent ce langage. Enfin, {\tt C++} est le seul langage supporté officiellement par Steinberg pour son SDK, bien que des projets aient porté le sdk dans d'autre langages, tels que Delphi et Java.
+
+Nous utiliserons le compilateur libre {\tt g++} dans sa version 4.4.3, qui suit la spécification {\tt C++ TR1}, norme actuelle du {\tt C++}.
+
 \subsection{VST SDK}
 Le VST SDK est un ensemble de classes {\tt C++} reposant sur une interface de programmation (API) sous-jacente écrite en C. Cela permettra un développement aisé, puisqu'orienté objet. De plus, ce SDK fournie une abstraction matérielle complète, ainsi qu'une abstraction logicielle, puisque son fonctionnement est garanti avec bon nombre de logiciels hôtes. Nous pourrons alors nous concentrer sur l'écriture des algorithmes, tout en étant sûr du fonctionnement du logiciel en dehors de notre environnement de test.
 
-~\\
 Le plugin aura besoin d'une interface graphique conviviale, qui devra être développée, le SDK ne proposant que des primitives pour des \emph{widgets} basiques tels que des boutons ou des potentiomètres. Nous utiliserons pour cela la bibliothèque libre (sous les termes de la BSD License) VSTGUI (\url{http://sourceforge.net/projects/vstgui/}), qui propose une interface de développement d'interface graphique de plus haut niveau.
 \subsection{Calcul sur GPU}
 Le logiciel utilisera une solution logicielle permettant de réaliser le calcul sur le GPU, et donc de diminuer la charge du processeur principal.
@@ -60,13 +87,55 @@ Le logiciel utilisera une solution logicielle permettant de réaliser le calcul 
 \paragraph{OpenCL}
 
 \paragraph{CUDA}
-% Références : CUDA, spécification 8 series, ncc
+% Références : CUDA, spécification 8 series, nvcc
 % Qu'est-ce que CUDA? Framework, bibliothèque, API?
-(Compute Unified Device Architecture) est disponible sur les cartes graphiques nVidia Geforce 8 series et postérieures. Cela veut dire qu'il faut obligatoirement une carte graphique satisfaisant cette spécification pour que le calcul soit possible. Cette technologie est mature, puisque la version 2 est considérée comme stable et la version 3 disponible en beta.
-~\\
-CUDA est un ajout au langage C, proposant quelques fonctions pour travailler sur la carte graphique, et quelques ajouts syntaxique afin de contrôler au mieux la gestion du calcul en parallèle.
-~\\
-C'est une technologie propriétaire, les sources du compilateur {\tt ncc} n'étant pas disponibles.
+(Compute Unified Device Architecture) est disponible sur les cartes graphiques nVidia Geforce 8 series  et postérieures (À partir du modèle 8400GS\footnote{Liste complète : \url{http://www.nvidia.com/object/cuda\_learn\_products.html}}). Cela veut dire qu'il faut obligatoirement une carte graphique satisfaisant cette spécification pour que le calcul sur GPU soit possible. Cette technologie est mature, puisque la version 2 est considérée comme stable et la version 3 disponible en beta.
+
+CUDA est, du côté utilisateur, un ajout au langage C, proposant quelques fonctions pour travailler sur la carte graphique, et quelques ajouts syntaxique afin de contrôler au mieux la gestion du calcul en parallèle. Le chaine de compilation pour un programme CUDA demande d'utiliser le compilateur {\tt nvcc}, sur les fichiers programmés en C-CUDA (d'extensions {\tt .cu}, puis d'effectuer l'édition de lien avec les autres fichiers compilés.\\
+
+Les principales primitives fournies par CUDA sont permettent l'appel de fonctions de calcul (appelé \emph{kernel}), et le transfert de donnée depuis la mémoire principale (désignée comme \emph{mémoire hôte}) vers la mémoire de la carte graphique (désignée comme \emph{mémoire du périphérique}). De plus, il est possible de changer les options de parallélisation (tels que le nombre d'unité de calcul à utiliser, le nombre de fil d'exécution par unité de calcul et le nombre de blocs mémoire à utiliser par unité de calcul).
+CUDA propose de plus une bibliothèque capable de calculer des transformées rapide de Fourier, de manière optimisée, par la carte graphique.
+
+C'est une technologie propriétaire, les sources du compilateur {\tt nvcc} n'étant pas disponibles.
 \section{Cahier des charges}
+\subsection{Fonctionnalités}
+\begin{itemize}
+    \item Les fonctionnalités que devra impérativement implémenter le plugin sont:
+    \begin{itemize}
+	\item Pouvoir charger une réponse impulsionnelle depuis un fichier audionumérique.
+	\item Pouvoir traiter un signal entrant par convolution avec le fichier chargé précédemment.
+	\item Pouvoir régler le taux entre les signaux traités et non traités en sortie du plugin.
+	\item Pouvoir changer entre le calcul par GPU ou CPU (soit avec un bouton à deux états, pendant la lecture, soit en proposant de changer le comportement à la compilation, et donc en proposant deux binaires).
+	\item Pouvoir utiliser plusieurs instances du plugin simultanément.
+    \end{itemize}
+    \item Les fonctionnalités que pourra implémenter le plugin, dans un ordre de priorité décroissant sont:
+    \begin{enumerate}
+	\item Pouvoir mettre un pré-délai sur le traitement, pour simuler une pièce de plus grande taille.
+	\item Pouvoir rogner le signal impulsionnel en durée.
+	\item Pouvoir inverser le signal impulsionnel.
+	\item Pouvoir changer l'enveloppe du signal impulsionnel (attack, decay, sustain, release).
+	\item Pouvoir égaliser le signal impulsionnel.
+    \end{enumerate}
+\end{itemize}
+\subsection{Performances}
+Le plugin se devra d'avoir de bonnes performances. De part la complexité du calcul d'une convolution, la lecture risque d'être retardée par le temps de calcul de l'effet. Ce phénomène est appelé latence en audionumérique.  La latence, induite par le traitement devra être minimal, sinon nulle.
+
+Un humain ne pouvant distinguer la latence qu'à partir d'environ 10 millisecondes à 440Hz, nous devrions idéalement être en dessous de ce seuil pour rendre le jeu en direct à travers le plugin possible.
+
+Le SDK VST propose de plus des fonctions de compensation de latence ce qui pourrait nous permettre d'augmenter la latence (par exemple pour diminuer la charge CPU ou GPU, et donc lancer plusieurs instances du plugin), sans pour autant entendre un quelconque décalage lors de la lecture.
+\subsection{Interface}
+\begin{itemize}
+    \item L'interface du plugin devra pouvoir permettre à l'utilisateur de :
+    \begin{itemize}
+	\item Choisir le signal impulsionnel à utiliser, par l'intermédiaire d'une liste de fichiers.
+	\item Proposer de contrôles pour les différentes fonctionnalités du plugin, tels que des faders (potentiomètre linéaires), des potentiomètres rotatifs, des boutons.
+    \end{itemize}
+    \item L'interface du plugin pourra en plus incorporer les éléments suivants:
+    \begin{itemize}
+	\item Un visualisateur pour le fichier d'impulsion.
+	\item Des vu-mêtres pour les signaux d'entrée et de sortie.
+	\item Un moyen plus visuel d'éditer les éventuels courbes de niveau, dessinant la courbe, par exemple.
+    \end{itemize}
+\end{itemize}
 \end{document}
 

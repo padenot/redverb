@@ -2,11 +2,14 @@
 
 % Faire des marges un peu moins large que celles par défaut
 \usepackage[top=20mm, bottom=20mm, left=35mm, right=35mm]{geometry}
-%\usepackage{ucs}
 \usepackage[utf8]{inputenc} % Pour l'encodage 
 % Reconnaitre les caratères accentués dans le source.
 \usepackage[T1]{fontenc} 
-% Meilleurs polices
+% Fontes
+% Helvetica (décommenter les deux lignes suivantes)
+%\usepackage[scaled]{helvet}
+%\renewcommand*\familydefault{\sfdefault}
+% Serif
 \usepackage[sc]{mathpazo}
 %\usepackage{concmath}
 \usepackage[francais]{babel}
@@ -18,7 +21,7 @@
 \usepackage{xcolor}
 % Pour fixer l'interlignage
 \usepackage{setspace} 
-% Pour faire un index (ici glossaire)
+% Pour faire un index 
 \usepackage{makeidx}
 % Pour gérer les liens internes et les URL cliquables
 \usepackage{url}
@@ -36,22 +39,22 @@
 \usepackage{float}
 % Pour les cadres à ombrage du glossaire
 \usepackage{fancybox}
-% Pour faire des sous-figures correctement numérotés
+% Pour faire des sous figures correctement numérotés
 \usepackage{subfigure}
 % Pour mettre les liens cliquables
 \usepackage{hyperref}
-\usepackage{verbatim}
+% Pour insérer des algorithmes en pseudocode
 \usepackage{algorithmic}
+% Pour enlever les espaces automatiques avant les : (utile pour les namespaces)
 \NoAutoSpaceBeforeFDP
 
+%Changer la taille entre les paragraphes.
+\parskip=1ex
 
-
+% Taille du header.
 \setlength{\headheight}{14.5pt}
 
-% Permet l'ajout de code par insertion du fichier le contenant
-% Coloration + ajout titre
-% Les arguments sont :
-% $1 : titre associé à l'extrait de code
+% Permet l'ajout de code par insertion du fichier
 % $2 : nom du fichier à inclure
 % $3 : le type de langage (C++, C, Java ...)
 \newcommand{\addCode}[2]{%
@@ -83,6 +86,7 @@
     \lstinputlisting{#1}
     \end{center}
 }
+% Manuel d'utilisation.
 \newcommand{\addExample}[6]
 {
     \begin{center}
@@ -112,6 +116,7 @@
     \normalsize
 }
 
+
 % Couleur des url et des liens internes.
 \hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true}
 
@@ -120,4 +125,4 @@
 \rhead{INSA de Lyon -- 2009/2010}
 \lhead{Fil Rouge}
 \cfoot{\thepage}
-
+\renewcommand{\footrulewidth}{0.4pt}
