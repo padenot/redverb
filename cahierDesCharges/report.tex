@@ -84,7 +84,6 @@ Le plugin aura besoin d'une interface graphique conviviale, qui devra être dév
 \subsection{Calcul sur GPU}
 Le logiciel utilisera une solution logicielle permettant de réaliser le calcul sur le GPU, et donc de diminuer la charge du processeur principal.
 À l'écriture de ces lignes, nous devons encore choisir entre deux solutions, OpenCL du Khronos Group ou CUDA de nVidia.
-\paragraph{OpenCL}
 
 \paragraph{CUDA}
 % Références : CUDA, spécification 8 series, nvcc
@@ -97,6 +96,12 @@ Les principales primitives fournies par CUDA sont permettent l'appel de fonction
 CUDA propose de plus une bibliothèque capable de calculer des transformées rapide de Fourier, de manière optimisée, par la carte graphique.
 
 C'est une technologie propriétaire, les sources du compilateur {\tt nvcc} n'étant pas disponibles.
+
+\paragraph{OpenCL}
+(Open Computing Language), est une alternative multiplateforme à CUDA. Elle se base sur les mêmes principes au niveau  de la programmation (un ajout au langage C) et possède l'avantage d'être à la fois multiplateforme (nul besoin de posséder un GPU de la marque nVidia) et plus générique dans le sens où OpenCL est aussi conçu pour permettre l'optimisation du calcul parallèle sur le \emph{CPU} en plus du \emph{GPU}. Les désavantages d'OpenCL par rapport à la technologie de nVidia résident principalement dans sa nouveauté. CUDA possède une plus ample documentation et probablement une grande communauté à ce jour, ce qui représente un avantage non négligeable.
+
+La programmation avec OpenCL est proche de CUDA. On retrouve exactement les mêmes notions de \emph{kernel}, \emph{mémoire hôte}, \emph{mémoire du périphérique}. Bien que les primitives fournies par les deux API ne soient pas strictement identiques, la même logique est mise en oeuvre et les mêmes possibilités sont offertes.
+
 \section{Cahier des charges}
 \subsection{Fonctionnalités}
 \begin{itemize}
@@ -118,7 +123,7 @@ C'est une technologie propriétaire, les sources du compilateur {\tt nvcc} n'ét
     \end{enumerate}
 \end{itemize}
 \subsection{Performances}
-Le plugin se devra d'avoir de bonnes performances. De part la complexité du calcul d'une convolution, la lecture risque d'être retardée par le temps de calcul de l'effet. Ce phénomène est appelé latence en audionumérique.  La latence, induite par le traitement devra être minimal, sinon nulle.
+Le plugin se devra d'avoir de bonnes performances. De part la complexité du calcul d'une convolution, la lecture risque d'être retardée par le temps de calcul de l'effet. Ce phénomène est appelé latence en audionumérique.  La latence, induite par le traitement devra être minimale, sinon nulle.
 
 Un humain ne pouvant distinguer la latence qu'à partir d'environ 10 millisecondes à 440Hz, nous devrions idéalement être en dessous de ce seuil pour rendre le jeu en direct à travers le plugin possible.
 
