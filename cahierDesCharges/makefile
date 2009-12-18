@@ -3,7 +3,7 @@ all : CahierDesCharges.pdf
 	evince CahierDesCharges.pdf
 	make clean
 
-CahierDesCharges.pdf : report.tex include.tex 
+CahierDesCharges.pdf : report.tex include.tex
 	pdflatex report.tex && pdflatex report.tex > /dev/null
 
 clean : 
@@ -11,8 +11,6 @@ clean :
 	rm -f *.loc
 	rm -f *.aux
 	rm -f *.log
-		
+	rm -f *~
 
-
-include.tex :
-
+include.tex : 

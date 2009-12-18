@@ -1,128 +1,150 @@
-\documentclass[a4paper, 11pt]{article}
+\documentclass[draft, a4paper, 11pt]{article}
 
-% Faire des marges un peu moins large que celles par défaut
-\usepackage[top=20mm, bottom=20mm, left=35mm, right=35mm]{geometry}
-\usepackage[utf8]{inputenc} % Pour l'encodage 
-% Reconnaitre les caratères accentués dans le source.
-\usepackage[T1]{fontenc} 
+
+
+% Inclusion des paquets --------------------------------------------------------
+
+% Réduction manuelle des marges
+	\usepackage[top=20mm, bottom=20mm, left=35mm, right=35mm]{geometry}
+
+ % Encodage du document source
+	\usepackage[utf8]{inputenc}
+
+% Gestion des caratères accentués du document source.
+	\usepackage[T1]{fontenc}
+
 % Fontes
 % Helvetica (décommenter les deux lignes suivantes)
 %\usepackage[scaled]{helvet}
 %\renewcommand*\familydefault{\sfdefault}
 % Serif
+
 \usepackage[sc]{mathpazo}
 %\usepackage{concmath}
 \usepackage[francais]{babel}
-% Insertion d'images
-\usepackage{graphicx}
-% Pour le listing de code
-\usepackage{listings}
-% Pour la coloration syntaxique
-\usepackage{xcolor}
-% Pour fixer l'interlignage
-\usepackage{setspace} 
-% Pour faire un index 
-\usepackage{makeidx}
+
+% Gestion de l'insertion d'images
+	\usepackage{graphicx}
+
+% Gestion du listing de code
+	\usepackage{listings}
+	% Mise en place de la coloration syntaxique
+		\usepackage{xcolor}
+
+% Gestion de l'interlignage
+	\usepackage{setspace}
+
+% Pour faire un index
+	\usepackage{makeidx}
+
 % Pour gérer les liens internes et les URL cliquables
-\usepackage{url}
+	\usepackage{url}
+
 % Pour les headers et footers
-\usepackage{fancyhdr}
+	\usepackage{fancyhdr}
 % Pour le logo en haut a droite
-\usepackage{eso-pic} 
+	\usepackage{eso-pic}
 % Pour l'enroulement du texte autour des figures
-\usepackage{wrapfig}
+	\usepackage{wrapfig}
 % Pour la couverture en PDF pleine page
-\usepackage{pdfpages} 
+	\usepackage{pdfpages}
 % Pour la biblio bibtex
-\usepackage{bibunits}
+	\usepackage{bibunits}
 % Pour gérer les éléments flottants
-\usepackage{float}
+	\usepackage{float}
 % Pour les cadres à ombrage du glossaire
-\usepackage{fancybox}
+	\usepackage{fancybox}
 % Pour faire des sous figures correctement numérotés
-\usepackage{subfigure}
+	\usepackage{subfigure}
 % Pour mettre les liens cliquables
-\usepackage{hyperref}
+	\usepackage{hyperref}
 % Pour insérer des algorithmes en pseudocode
-\usepackage{algorithmic}
+	\usepackage{algorithmic}
+
+
+
+% Définition du style ----------------------------------------------------------
+
 % Pour enlever les espaces automatiques avant les : (utile pour les namespaces)
 \NoAutoSpaceBeforeFDP
 
-%Changer la taille entre les paragraphes.
-\parskip=1ex
+% Changer l'espace entre les paragraphes
+	\parskip=1ex
 
-% Taille du header.
-\setlength{\headheight}{14.5pt}
+% Taille du header
+	\setlength{\headheight}{14.5pt}
 
 % Permet l'ajout de code par insertion du fichier
 % $2 : nom du fichier à inclure
 % $3 : le type de langage (C++, C, Java ...)
+
 \newcommand{\addCode}[2]{%
 
-  % Configuration de la coloration syntaxique du code
-  \definecolor{colKeys}{rgb}{0,0,1}
-  \definecolor{colIdentifier}{rgb}{0,0,0}
-  \definecolor{colComments}{rgb}{0,0.5,1}
-  \definecolor{colString}{rgb}{0.6,0.1,0.1}
-
-  % Configuration des options 
-  \lstset{%
-    language = #2,%
-    identifierstyle=\color{colIdentifier},%
-    basicstyle=\ttfamily\scriptsize, %
-    keywordstyle=\color{colKeys},%
-    stringstyle=\color{colString},%
-    commentstyle=\color{colComments},%
-    columns = flexible,%
-    %tabsize = 8,%
-    showspaces = false,%
-    numbers = left, numberstyle=\tiny,%
-    frame = single,frameround=tttt,%
-    breaklines = true, breakautoindent = true,%
-    captionpos = b,%
-    xrightmargin=10mm, xleftmargin = 15mm, framexleftmargin = 7mm,%
-  }%
-    \begin{center}
-    \lstinputlisting{#1}
-    \end{center}
+% Configuration de la coloration syntaxique du code
+	\definecolor{colKeys}{rgb}{0,0,1}
+	\definecolor{colIdentifier}{rgb}{0,0,0}
+	\definecolor{colComments}{rgb}{0,0.5,1}
+	\definecolor{colString}{rgb}{0.6,0.1,0.1}
+	
+% Configuration des options 
+	\lstset{%
+		language = #2,%
+		identifierstyle=\color{colIdentifier},%
+		basicstyle=\ttfamily\scriptsize, %
+		keywordstyle=\color{colKeys},%
+		stringstyle=\color{colString},%
+		commentstyle=\color{colComments},%
+		columns = flexible,%
+		%tabsize = 8,%
+		showspaces = false,%
+		numbers = left, numberstyle=\tiny,%
+		frame = single,frameround=tttt,%
+		breaklines = true, breakautoindent = true,%
+		captionpos = b,%
+		xrightmargin = 10mm, xleftmargin = 15mm, framexleftmargin = 7mm,%
+	}%
+	\begin{center}
+	\lstinputlisting{#1}
+	\end{center}
 }
-% Manuel d'utilisation.
+
+% Manuel d'utilisation
 \newcommand{\addExample}[6]
 {
-    \begin{center}
-    \footnotesize
-        \definecolor{lightlgray}{rgb}{0.9,0.9,0.9}
-        \fcolorbox{black}{lightlgray}{
-            \begin{minipage}{0.9\linewidth}
-                \setlength{\fboxrule}{1pt}
-                \framebox{{\Large\texttt{#1}}}
-                \setlength{\fboxrule}{0.4pt}
-                \footnotesize
-                \begin{description}
-                    \item[Syntaxe] ~\\
-                        \texttt{#2}
-                    \item[Description]
-                    #3
-                    \item[Valeur de retour]~\\
-                    #4
-                    \item[Exemple d'utilisation] ~\\
-                        \begin{minipage}{0.9\linewidth}
-                        \addCode{#5}{#6}
-                        \end{minipage}
-                \end{description} 
-            \end{minipage}
-        } %end fcolorbox
-    \end{center}
-    \normalsize
+	\begin{center}
+		\footnotesize
+		\definecolor{lightlgray}{rgb}{0.9,0.9,0.9}
+		\fcolorbox{black}{lightlgray}{
+			\begin{minipage}{0.9\linewidth}
+				\setlength{\fboxrule}{1pt}
+				\framebox{{\Large\texttt{#1}}}
+				\setlength{\fboxrule}{0.4pt}
+				\footnotesize
+				\begin{description}
+					\item[Syntaxe] ~\\
+					\texttt{#2}
+					\item[Description]
+					#3
+					\item[Valeur de retour]~\\
+					#4
+					\item[Exemple d'utilisation] ~\\
+					\begin{minipage}{0.9\linewidth}
+						\addCode{#5}{#6}
+					\end{minipage}
+				\end{description} 
+			\end{minipage}
+		} %end fcolorbox
+	\end{center}
+	\normalsize
 }
 
 
 % Couleur des url et des liens internes.
-\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true}
+	\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true}
 
 %headers, footers
-\pagestyle{fancy}
-\rhead{INSA de Lyon -- 2009/2010}
-\lhead{Fil Rouge}
-\cfoot{\thepage}
-\renewcommand{\footrulewidth}{0.4pt}
+	\pagestyle{fancy}
+	\rhead{INSA de Lyon -- 2009/2010}
+	\lhead{Fil Rouge}
+	\cfoot{\thepage}
+	\renewcommand{\footrulewidth}{0.4pt}
