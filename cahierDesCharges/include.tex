@@ -1,4 +1,4 @@
-\documentclass[draft, a4paper, 11pt]{article}
+\documentclass[a4paper, 11pt]{article}
 
 
 
@@ -23,56 +23,63 @@
 %\usepackage{concmath}
 \usepackage[francais]{babel}
 
-% Gestion de l'insertion d'images
-	\usepackage{graphicx}
-
 % Gestion du listing de code
 	\usepackage{listings}
 	% Mise en place de la coloration syntaxique
 		\usepackage{xcolor}
+% Pour insérer des algorithmes en pseudocode
+	\usepackage{algorithmic}
+
+
 
 % Gestion de l'interlignage
 	\usepackage{setspace}
 
-% Pour faire un index
-	\usepackage{makeidx}
 
+
+% Gestion de l'index (table de signets)
+	\usepackage{makeidx}
 % Pour gérer les liens internes et les URL cliquables
 	\usepackage{url}
+% Pour mettre les liens cliquables
+	\usepackage{hyperref}
 
-% Pour les headers et footers
+
+
+% Pour les en-têtes et pieds-de-page
 	\usepackage{fancyhdr}
 % Pour le logo en haut a droite
 	\usepackage{eso-pic}
-% Pour l'enroulement du texte autour des figures
-	\usepackage{wrapfig}
 % Pour la couverture en PDF pleine page
 	\usepackage{pdfpages}
 % Pour la biblio bibtex
 	\usepackage{bibunits}
+
+
+
+% Gestion de l'insertion d'images
+	\usepackage{graphicx}
+% Pour l'enroulement du texte autour des figures
+	\usepackage{wrapfig}
 % Pour gérer les éléments flottants
 	\usepackage{float}
 % Pour les cadres à ombrage du glossaire
 	\usepackage{fancybox}
 % Pour faire des sous figures correctement numérotés
 	\usepackage{subfigure}
-% Pour mettre les liens cliquables
-	\usepackage{hyperref}
-% Pour insérer des algorithmes en pseudocode
-	\usepackage{algorithmic}
 
 
 
 % Définition du style ----------------------------------------------------------
 
 % Pour enlever les espaces automatiques avant les : (utile pour les namespaces)
-\NoAutoSpaceBeforeFDP
-
+	\NoAutoSpaceBeforeFDP
 % Changer l'espace entre les paragraphes
 	\parskip=1ex
-
 % Taille du header
 	\setlength{\headheight}{14.5pt}
+
+
 
 % Permet l'ajout de code par insertion du fichier
 % $2 : nom du fichier à inclure
@@ -139,10 +146,10 @@
 }
 
 
-% Couleur des url et des liens internes.
+% Couleurs des URL et des liens internes
 	\hypersetup{urlcolor=blue,linkcolor=black,citecolor=black,colorlinks=true}
 
-%headers, footers
+% En-têtes, pieds-de-page
 	\pagestyle{fancy}
 	\rhead{INSA de Lyon -- 2009/2010}
 	\lhead{Fil Rouge}

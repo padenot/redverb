@@ -60,7 +60,8 @@
 		\subsection{Langage {\tt C++}}
 			Bien qu'il soit possible de programmer avec le SDK VST dans bon nombre de langages, nous avons choisi le {\tt C++} car il est d'une part très rapide (la rapidité étant la caractéristique principale de choix), et d'autre part compatible nativement avec des solutions de calcul sur GPU. De plus, tous les membres du projet connaissent ce langage. Enfin, {\tt C++} est le seul langage supporté officiellement par Steinberg pour son SDK, bien que des projets aient porté le SDK dans d'autres langages, tels que Delphi et Java.
 
-			Nous utiliserons le compilateur libre {\tt g++} dans sa version 4.4.3, qui suit la spécification {\tt C++ TR1}, norme actuelle du {\tt C++}.
+			Nous utiliserons le compilateur libre {\tt gcc} dans sa version 4.4.2, qui suit la spécification {\tt C++03}, norme actuelle du {\tt C++}.
+			%Nous utiliserons le compilateur libre {\tt g++} dans sa version 4.4.3, qui suit la spécification {\tt C++ TR1}, norme actuelle du {\tt C++}.
 
 		\subsection{VST SDK}
 			Le VST SDK est un ensemble de classes {\tt C++} reposant sur une interface de programmation (API) sous-jacente écrite en C. Cela permettra un développement aisé, puisqu'orienté objet. De plus, ce SDK fournit une abstraction matérielle complète, ainsi qu'une abstraction logicielle, puisque son fonctionnement est garanti avec bon nombre de logiciels hôtes. Nous pourrons alors nous concentrer sur l'écriture des algorithmes, tout en étant sûr du fonctionnement du logiciel en dehors de notre environnement de test.
