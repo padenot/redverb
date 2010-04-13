@@ -1,0 +1,13 @@
+vstPlugName = 'verb'
+vstSDKDir = 'C:\\vstsdk2.4'
+boostDir = 'C:\boost_1_42_0\boost\filesystem'
+libsndfileDir = 'C:\libsndfile\include'
+
+source = Glob('*.cpp')
+
+
+env = Environment(CPPPATH= libsndfileDir, tools=['mingw'], LIBPATH='C:\libsndfile', LIBS='libsndfile-1')
+
+env['CCFLAGS'] = ['-Wall -O3']
+
+env.Program('test.exe','testLibSndFile.cpp')

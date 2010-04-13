@@ -1,0 +1,11 @@
+progName = 'test.exe'
+libsndfileDir = 'C:\libsndfile\include'
+
+source = Glob('*.cpp')
+
+
+env = Environment(CPPPATH=libsndfileDir, tools=['mingw'], LIBPATH='C:\libsndfile', LIBS='libsndfile-1')
+
+env['CCFLAGS'] = ['-Wall -O3']
+
+env.Program(progName, source)

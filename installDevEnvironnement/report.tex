@@ -1,0 +1,72 @@
+\input{include.tex}
+\author{Paul ADENOT}
+\title{Mettre en place un environnement de développement sous Microsoft Windows}
+\begin{document}
+\maketitle
+\tableofcontents
+\section{Introduction}
+Le but de ce document est de guider le lecteur pour la mise en place rapide d'un environnement de développement C++ sous Microsoft Windows. La dernière partie sera consacrée à une présentation de l'outil de construction de logiciel SCons.
+
+\section{Installation de la chaine de compilation C++}
+Notre chaine de compilation sera composé de MinGW (Minimalistic GNU for Windows), qui est un portage de GCC sous Microsoft Windows, ainsi que de l'outil SCons, qui remplace avantageusement le classique {\tt make}.
+\subsection{MinGW}
+L'équipe de MinGW propose un {\tt bootstrapper} qui permet de télécharger les bon fichiers pour le système. Il va sans dire qu'une connexion internet est bien sûre requise pour cette étape.\\
+
+	Commençons par télécharger le {\tt bootstrapper} sur le site de MinGW, à l'adresse \url{http://sourceforge.net/projects/mingw/files/Automated%20MinGW%20Installer/MinGW%205.1.6/MinGW-5.1.6.exe/download}.
+
+	Ce programme va télécharger ce dont il a besoin à partir d'internet. Notons qu'il faut cocher la case pour installer g++, le compilateur C++, le programme d'installation par défaut que le compilateur C.
+
+	L'installation terminée, il faut ajouter le dossier contenant les binaires (particulièrement {\tt g++}) à la variable {\tt PATH} du système.
+
+	Il faut pour celà aller dans le Poste de travail (Ordinateur sous Vista/Seven), faire un clic droit sur le fond de la fenêtre, propriété, puis cliquer sur le lien qui parle de choses avancées dans la partie gauche de la fenêtre (sous XP, c'est l'onglet avancé). Ensuite, cliquer en bas de la fenêtre qui s'ouvre sur le bouton Variables d'environnement. La, il faut double cliquer sur {PATH}, et ajouter un point virgule, puis le chemin où se trouve {\tt g++} (possiblement {$\tt C:\backslash{}MinGW\backslash{}bin$}).
+
+	Pour vérifier, ouvrons un shell (Windows+r, {\tt cmd}, ou alors par le menu). Tappons la commande {\tt g++ -v}, et nous devrions voir {\tt g++} réagir.
+\subsection{SCons}
+SCons est un outil similaire à {\tt make}, dans le sens où il permet de compiler des programmes. Mais il est bien plus simple d'utilisation, et utilise Python.
+
+Pour l'installer, il faut d'abord installer un exécuteur Python. Rendez vous sur le site officiel du langage (\url{http://www.python.org}), et télécharger la version 2.6.4, et surtout pas la version 3.1 (qui est incompatible avec SCons). Installez le langage.	
+
+Ensuite, sur le site de SCons (\url{http://www.scons.org/}), cliquez sur Windows dans la section «Stable». Cela nous mène sur SourceForge. Installez l'outil, qui devrait localiser une installation valide de Python.
+
+Il est une fois de plus nécessaire de rajouter les programmes installés dans la variable {\tt PATH}. La procédure est toujours la même, rajoutez {$\tt C:\backslash{}Python26$}, de même que \\{$\tt C:\backslash{}Python26\backslash{}Scripts$}, toujours séparés par des point virgules, toujours sans espaces.
+\section{Installation des bibliothèques}
+L'installation de bibliothèques sous Windows est un peu compliqué, puisqu'il faudrait les installer chacune à la main, si l'on suivait la philosophie Windows. Heureusement, le bootstrapper de l'environnement Cygwin peut nous faire gagner beaucoup de temps.
+\subsection{Ruser avec Cygwin}
+Cygwin est un couche d'abstraction pour avoir les outils GNU sur Windows. Il propose par exemple {\tt bash}, {\tt KDE}, les {\tt autotools}, et beaucoup d'autres logiciels libres.
+
+Commençons par télécharger le bootstrapper sur le site de Cygwin (\url{http://www.cygwin.com/}), dans le bas de la page, «Install or update now!». Lancez ce logiciels, qui va chercher des miroirs, puis proposer une immense liste de paquets. Choisissez Boost et CppUnit dans la section «Developpement». Il est recommandé d'installer un shell correct (de type {\tt zsh}), beaucoup de ligne de commande sont à prévoir.
+
+Si par la suite on souhaite installer d'autre logiciels, il suffit de relancer {\tt setup.exe}, qui devrait trouver l'installation de Cygwin, et proposer de mettre à jour les version des paquets, ainsi que d'autres logiciels.
+\subsection{VST SDK}
+Le VST SDK de Steinberg n'étant pas un logiciel libre, il ne figure pas dans la liste des logiciels proposés par Cygwin. Il faut donc aller le télécharger sur le site de l'éditeur (la création d'un compte sur le site est nécessaire). Il s'agit ensuite de le décompresser pour pouvoir accéder aux fichier d'en tête de la bibliothèque.
+\subsection{{\tt libsndfile}}
+Cette bibliothèque, bien que libre, n'est pas proposée par Cygwin. Il faut donc aller la télécharger sur le site de l'auteur, sur \url{http://www.mega-nerd.com/libsndfile/}, section «Download». De la même manière, il faut la décompresser pour accéder à la biblothèque partagée, et aux fichiers d'en-têtes.
+\section{Introduction à SCons}
+L'équivalement SCons du traditionnel Makefile est le SConstruct. Un fichier de ce nom doit être placé à la racine du projet.
+
+Un fichier SConstruct doit suivre la syntaxe de Python. Les listes sont entre crochets: 
+
+{\tt myList = ['element1', 'element2', 'element3']}
+
+Les fins de lignes ne prennent pas de point virgules.
+
+On construit un projet en tappant simplement {\tt scons} dans le répertoire où le fichier SConstruct se trouve. L'équivalent de {\tt make clean} est {\tt scons -c} (pour clean).
+
+Le fichier SConstruct suivant permet de créer un exécutable de nom «test» à partir de tous les fichier d'extension .cpp du répertoire courant.
+
+\addCode{SConstruct1}{python}
+
+On peut utiliser simplement des variables, de la même manière qu'en Python. Notons que l'on peut mélanger fichiers objets et code.
+\addCode{SConstruct2}{python}
+
+Spécifier l'emplacement de fichiers d'en-têtes, qui sont souvent placés à des endroits différents sous Windows, se fait en utiliser un environnement de compilation, comme le montre le fichier suivant. Cet exemple montre aussi comment lier une bibliothèque partagée lors de l'édition des liens, et comment passer d'autres options de compilation.
+\newpage
+\addCode{SConstruct3}{python}
+
+Voila enfin un fichier SConstruct qui peut compiler un plugin VST qui utilise Boost Filesystem :
+\addCode{SConstruct}{python}
+
+La documentation de SCons, disponible sur le site officiel, est très complète, et pourra répondre à toute les questions.
+
+\end{document}
+

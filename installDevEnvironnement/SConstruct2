@@ -1,0 +1,4 @@
+cppFile = Glob('src/*.cpp')
+objFile = 'myObjectFile.o'
+
+Program('test', [cppFile, objFile])

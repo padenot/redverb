@@ -1,0 +1,17 @@
+vstPlugName = 'verb'
+vstSDKDir = 'C:\\vstsdk2.4'
+boostDir = 'C:\boost_1_42_0\boost\filesystem'
+libsndfileDir = 'C:\libsndfile\include'
+
+source = Glob('src/*.cpp')
+
+
+env = Environment(CPPPATH= vstSDKDir+boostDir, tools=['mingw'])
+
+env['CCFLAGS'] = ['-Wall -O3']
+
+env.SharedLibrary(vstPlugName, [
+		  source, 
+		  vstSDKDir+'\\public.sdk\\source\\vst2.x\\audioeffect.cpp',
+		  vstSDKDir+'\\public.sdk\\source\\vst2.x\\audioeffectx.cpp',
+		  vstSDKDir+'\\public.sdk\\source\\vst2.x\\vstplugmain.cpp'])
