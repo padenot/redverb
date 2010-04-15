@@ -133,9 +133,10 @@ private:
 	/// The delay, in samples
 	long bufferSize;
 
+	
+
 	/// The logger !
 	FileLogger* log;
-
 };
 
 

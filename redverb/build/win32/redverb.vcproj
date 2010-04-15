@@ -28,7 +28,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="copy /Y &quot;..\..\..\wrapper\RTAS\juce_RTAS_WinResources.rsr&quot; &quot;$(TargetPath)&quot;.rsr&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;..\..\src/juce\RTAS\juce_RTAS_WinResources.rsr&quot; &quot;$(TargetPath)&quot;.rsr&#x0D;&#x0A;"
 				Outputs="&quot;$(TargetPath)&quot;.rsr"
 			/>
 			<Tool
@@ -43,7 +43,7 @@
 			<Tool
 				Name="VCCLCompilerTool"
 				Optimization="0"
-				AdditionalIncludeDirectories="C:\vstsdk2.4;../../src"
+				AdditionalIncludeDirectories="..\..\src/juce;C:\vstsdk2.4;../../src"
 				PreprocessorDefinitions="WIN32;_DEBUG;_WINDOWS;_USRDLL;JUCEDEMOPLUGIN_EXPORTS"
 				MinimalRebuild="true"
 				BasicRuntimeChecks="3"
@@ -67,7 +67,7 @@
 				AdditionalOptions="/FORCE:multiple"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="2"
-				ModuleDefinitionFile="../../../wrapper/RTAS/juce_RTAS_WinExports.def"
+				ModuleDefinitionFile="..\..\src/juce/RTAS/juce_RTAS_WinExports.def"
 				DelayLoadDLLs="DAE.dll; DigiExt.dll; DSI.dll; PluginLib.dll; DSPManager.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -110,7 +110,7 @@
 			/>
 			<Tool
 				Name="VCCustomBuildTool"
-				CommandLine="copy /Y &quot;..\..\..\wrapper\RTAS\juce_RTAS_WinResources.rsr&quot; &quot;$(TargetPath)&quot;.rsr&#x0D;&#x0A;"
+				CommandLine="copy /Y &quot;../../src/juce\RTAS\juce_RTAS_WinResources.rsr&quot; &quot;$(TargetPath)&quot;.rsr&#x0D;&#x0A;"
 				Outputs="&quot;$(TargetPath)&quot;.rsr"
 			/>
 			<Tool
@@ -146,7 +146,7 @@
 				AdditionalOptions="/FORCE:multiple"
 				OutputFile="$(OutDir)\$(ProjectName).dll"
 				LinkIncremental="1"
-				ModuleDefinitionFile="../../../wrapper/RTAS/juce_RTAS_WinExports.def"
+				ModuleDefinitionFile="../../src/juce/RTAS/juce_RTAS_WinExports.def"
 				DelayLoadDLLs="DAE.dll; DigiExt.dll; DSI.dll; PluginLib.dll; DSPManager.dll"
 				GenerateDebugInformation="true"
 				SubSystem="2"
@@ -191,6 +191,14 @@
 				Name="plugin"
 				>
 				<File
+					RelativePath="..\..\src\Impulse.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Impulse.h"
+					>
+				</File>
+				<File
 					RelativePath="..\..\src\includes.h"
 					>
 				</File>
@@ -232,13 +240,13 @@
 				</File>
 			</Filter>
 			<Filter
-				Name="wrapper"
+				Name="juce"
 				>
 				<Filter
 					Name="VST"
 					>
 					<File
-						RelativePath="..\..\..\wrapper\VST\juce_VST_Wrapper.cpp"
+						RelativePath="../../src/juce\VST\juce_VST_Wrapper.cpp"
 						>
 					</File>
 				</Filter>
@@ -246,7 +254,7 @@
 					Name="RTAS"
 					>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_DigiCode1.cpp"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_DigiCode1.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -266,7 +274,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_DigiCode2.cpp"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_DigiCode2.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -286,7 +294,7 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_DigiCode3.cpp"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_DigiCode3.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"
@@ -306,15 +314,15 @@
 						</FileConfiguration>
 					</File>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_DigiCode_Header.h"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_DigiCode_Header.h"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_WinUtilities.cpp"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_WinUtilities.cpp"
 						>
 					</File>
 					<File
-						RelativePath="..\..\..\wrapper\RTAS\juce_RTAS_Wrapper.cpp"
+						RelativePath="../../src/juce\RTAS\juce_RTAS_Wrapper.cpp"
 						>
 						<FileConfiguration
 							Name="Debug|Win32"

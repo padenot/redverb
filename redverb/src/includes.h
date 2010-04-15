@@ -22,5 +22,6 @@
 
   ==============================================================================
 */
-
+#include "JucePluginCharacteristics.h"
+#include "juce_AppConfig.h"
 #include "juce/juce_amalgamated.h"
