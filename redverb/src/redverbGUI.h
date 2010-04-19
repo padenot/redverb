@@ -79,9 +79,13 @@ private:
 	 */
 	Slider* delaySlider;
 	/**
-	 * @brief Example of a slider with custom graphics.
+	 * @brief Slider for the dry gain value.
 	 */
-    Slider* customSlider;
+    Slider* drySlider;
+	/**
+	 * @brief Slider for the dry wet value.
+	 */
+    Slider* wetSlider;
 	/**
 	 * @brief To make the GUI resizable.
 	 */

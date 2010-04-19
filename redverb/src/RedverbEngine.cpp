@@ -35,7 +35,9 @@ RedverbEngine::RedverbEngine()
     gain = 1.0f;
 	feedback = 0.5f;
 	delay = 300.0f;
-	cursor = 0;
+	cursor = 0;//??what is that
+	dryGain = 0.0f;
+	wetGain= 0.0f;
 
     lastUIWidth = 400;
     lastUIHeight = 140;
@@ -57,12 +59,12 @@ RedverbEngine::~RedverbEngine()
 //==============================================================================
 const String RedverbEngine::getName() const
 {
-    return "Juce Demo Filter";
+    return "Redverb";
 }
 
 int RedverbEngine::getNumParameters()
 {
-    return 3;
+    return 5;
 }
 
 float RedverbEngine::getParameter (int index)
@@ -75,6 +77,10 @@ float RedverbEngine::getParameter (int index)
 			return feedback;
 		case 2:
 			return delay;
+		case 3:
+			return dryGain;
+		case 4:
+			return wetGain;
 	}
 }
 
@@ -86,8 +92,7 @@ void RedverbEngine::setParameter (int index, float newValue)
 		if (gain != newValue)
 		{
 			gain = newValue;
-			sendChangeMessage (this);
-			
+			sendChangeMessage (this);		
 		}
 		break;
 	case 1:
@@ -106,6 +111,23 @@ void RedverbEngine::setParameter (int index, float newValue)
 		
 		}
 			break;
+	case 3:
+		if(dryGain != newValue)
+		{
+			dryGain = newValue;
+		//	Logger::writeToLog("Dry gain change (engine) : " + String(dryGain,2));
+			sendChangeMessage(this);
+		
+		}
+			break;
+	case 4:
+		if(wetGain != newValue)
+		{
+			wetGain = newValue;
+			sendChangeMessage(this);
+		//	Logger::writeToLog("Wet gain change (engine) : " + String(wetGain,2));
+		}
+			break;
 	}
 }
 
@@ -119,6 +141,10 @@ const String RedverbEngine::getParameterName (int index)
 		return T("fb");
 	case 2:
 		return T("delay");
+	case 3:
+		return T("dryGain");
+	case 4:
+		return T("wetGain");
 	default:
 		 return String::empty;
 	}
@@ -135,6 +161,10 @@ const String RedverbEngine::getParameterText (int index)
 		return String (feedback, 2);
 	case 2:
 		return String (delay, 2);
+	case 3:
+		return String (dryGain, 0);
+	case 4:
+		return String (wetGain, 0);
 	default:
 		return String::empty;
 	}

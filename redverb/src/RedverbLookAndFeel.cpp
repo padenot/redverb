@@ -20,7 +20,7 @@
 void RedverbLookAndFeel::drawLinearSliderThumb (Graphics &g, int x, int y, int width, int height,
 			 float sliderPos, float minSliderPos, float maxSliderPos, const Slider::SliderStyle style, Slider &slider)
 {
-	Logger::writeToLog("DrawLinearSliderThumb");
+	//Logger::writeToLog("DrawLinearSliderThumb");
 }
 
 void RedverbLookAndFeel::drawLinearSliderBackground (Graphics &g, int x, int y, int width, int height,
@@ -28,14 +28,24 @@ void RedverbLookAndFeel::drawLinearSliderBackground (Graphics &g, int x, int y, 
 {
 	Colour c1(255,255,255);
 	Colour c2(128,128,128);
-	double rectHeight = slider.getValue()*height/1000;
-
-	g.setColour(c2);
-
-	g.drawRect(x, -rectHeight + y+height, 20, rectHeight, 1);
-	String str;
+	int rectHeight = slider.getValue()*height/(slider.getMaximum() - slider.getMinimum());
 
 	g.setColour(c1);
+	g.fillRect(x, -rectHeight + y+height, width, rectHeight);
+	///g.drawRect(x, -rectHeight + y+height, width, rectHeight, 1);
+	//String str;
+
+	g.setColour(c1);
+	
+	//Logger::writeToLog(slider.getName());
+	//Logger::writeToLog("slider.getMaxValue() : " + String(slider.getMaximum()));
+	//Logger::writeToLog("slider.getMinValue() : " + String(slider.getMinimum()));
+	//Logger::writeToLog("maxSliderPos : " + String(maxSliderPos, 2));
+	//Logger::writeToLog("minSliderPos : " + String(minSliderPos, 2));
+	//Logger::writeToLog("height :" + String(height));
+	//Logger::writeToLog(String("slider.getValue() :") + String(slider.getValue()));
+	//Logger::writeToLog(String("Draw LinearSlider : ") + String(-rectHeight + y + height));
+
 }
 
 void RedverbLookAndFeel::drawRotarySlider(Graphics &g, int x, int y, int width, int height,

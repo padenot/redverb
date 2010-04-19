@@ -126,6 +126,14 @@ private:
 	float feedback;
 	/// The delay, in ms
 	float delay;
+	/// The dryGain
+	float dryGain;
+	/// The wetGain
+	float wetGain;
+
+
+
+
 	/// The delay buffer
 	float* accBuffer;
 	/// The delay cursor

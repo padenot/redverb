@@ -49,18 +49,34 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
 
 	delaySlider->setValue (ownerFilter->getParameter (2), false);
 
-	/** Custom Slider test **/
-	addAndMakeVisible (customSlider = new Slider (T("custom")));
-	customSlider->setLookAndFeel(new RedverbLookAndFeel());
-	Slider::SliderStyle style;
-	style = Slider::LinearVertical;
-	customSlider->setSliderStyle(style);
-    customSlider->addListener (this);
-    customSlider->setRange (0.0, 1000.0, 0.01);
-    customSlider->setTooltip (T("This is a custom slider instance."));
+	/** Custom Slider DRY**/
+	addAndMakeVisible (drySlider = new Slider (T("dryGain")));
+	drySlider->setLookAndFeel(new RedverbLookAndFeel());
+	Slider::SliderStyle dryStyle;
+	dryStyle = Slider::LinearVertical;
+	drySlider->setSliderStyle(dryStyle);
+    drySlider->addListener (this);
+    drySlider->setRange (0, 1.25, 0.01);
+	drySlider->setDoubleClickReturnValue(true,1.0);
+	drySlider->setValue(1.0);
+    drySlider->setTooltip (T("This slider sets the dry gain ratio."));
 
-	customSlider->setValue (ownerFilter->getParameter (2),false);
-	
+	drySlider->setValue (ownerFilter->getParameter (3),false);
+
+	/** Custom Slider WET **/
+	addAndMakeVisible (wetSlider = new Slider (T("wetGain")));
+	wetSlider->setLookAndFeel(new RedverbLookAndFeel());
+	Slider::SliderStyle wetStyle;
+	wetStyle = Slider::LinearVertical;
+	wetSlider->setSliderStyle(wetStyle);
+    wetSlider->addListener (this);
+    wetSlider->setRange (0, 1.25, 0.01);
+	wetSlider->setDoubleClickReturnValue(true,1.0);
+	wetSlider->setValue(1.0);
+    wetSlider->setTooltip (T("This slider sets the wet gain ratio."));
+
+
+	wetSlider->setValue (ownerFilter->getParameter(4),false);
 
 
 
@@ -89,7 +105,14 @@ RedverbGUI::~RedverbGUI()
 void RedverbGUI::paint (Graphics& g)
 {
     // just clear the window
-    g.fillAll (Colour::greyLevel (0.9f));
+    //g.fillAll (Colour::greyLevel (0.9f));
+
+	// blit the background
+	g.drawImageAt(ImageFileFormat::loadFrom(File("c:/fond.png")),0,0);
+	//prefere to load from an input stream, and add the image directly in binary code.
+	//prevents loading time
+	//g.drawImageAt(ImageFileFormat::loadFrom(THE_INPUT_STREAM)),0,0);
+
 }
 
 void RedverbGUI::resized()
@@ -101,7 +124,8 @@ void RedverbGUI::resized()
 
 	delaySlider->setBounds(10, 70, 200, 22);
 
-	customSlider->setBounds(240, 10, 22, 100);
+	drySlider->setBounds(552, 183, 6, 144);
+	wetSlider->setBounds(579, 183, 6, 144);
 
     // if we've been resized, tell the filter so that it can store the new size
     // in its settings
@@ -123,18 +147,21 @@ void RedverbGUI::sliderValueChanged (Slider* slider)
 	{
 		getFilter()->setParameterNotifyingHost (0, (float) slider->getValue());
 	}
-	if(slider->getName()=="feedback")
+	else if(slider->getName()=="feedback")
 	{
 		getFilter()->setParameterNotifyingHost (1, (float) slider->getValue());
 	}
-	if(slider->getName()=="delay")
+	else if(slider->getName()=="delay")
 	{
 		getFilter()->setParameterNotifyingHost (2, (float) slider->getValue());
 	}
-	if(slider->getName()=="custom")
+	else if(slider->getName()=="dryGain")
 	{
-		getFilter()->setParameterNotifyingHost (2, (float) slider->getValue());
-		customSlider->repaint();
+		getFilter()->setParameterNotifyingHost (3, (float) slider->getValue());
+	}
+	else if(slider->getName()=="wetGain")
+	{
+		getFilter()->setParameterNotifyingHost (4, (float) slider->getValue());
 	}
 }
 
@@ -152,7 +179,8 @@ void RedverbGUI::updateParametersFromFilter()
     const float newGain = filter->getParameter (0);
 	const float newFeedback = filter->getParameter(1);
 	const float newDelay = filter->getParameter(2);
-	const float newCustom = filter->getParameter(2);
+	const float newDry = filter->getParameter(3);
+	const float newWet = filter->getParameter(4);
 
     // ..release the lock ASAP
     filter->getCallbackLock().exit();
@@ -166,7 +194,8 @@ void RedverbGUI::updateParametersFromFilter()
     gainSlider->setValue (newGain, false);
 	feedbackSlider->setValue(newFeedback, false);
 	delaySlider->setValue(newDelay,false);
-	customSlider->setValue(newCustom, false);
+	drySlider->setValue(newDry, false);
+	wetSlider->setValue(newWet, false);
 	
 
     setSize (filter->lastUIWidth,
