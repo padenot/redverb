@@ -159,30 +159,201 @@ public:
 	 */
 	double Normalize(float gain = 0.0f);
 	/*********** Getters // Setters ************/
-	long getStart();
-	void setStart(long value);
-	long getEnd();
-	void setEnd(long value);
-	float getAttack();
-	float getDecay();
-	float getSustain();
-	float getRelease();
-	void setAttack(float value);
-	void setDecay(float value);
-	void setSustain(float value);
-	void setRelease(float value);
-	float getAttackTime();
-	float getDecayTime();
-	float getSustainTime();
-	float getReleaseTime();
-	void setAttackTime(long value);
-	void setDecayTime(long value);
-	void setSustainTime(long value);
-	void setReleaseTime(long value);
-	void setReversed(bool true);
-	bool isReversed();
-	bool isADSREnabled();
-	void setADSREnabled(bool value);
+	long getStart()
+	{
+		return start;
+	}
+
+	void setStart(long value)
+	{
+		if(value >= 0 && value < end)
+		{
+			start = value;
+		}
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value or greater than end")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+
+	long getEnd()
+	{
+		return end;
+	}
+
+	void setEnd(long value)
+	{
+		if( (value > 0) && (value > start)		)
+		{
+			end = value;
+		}
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value or lower than start ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+
+	float getAttack()
+	{
+		return attack;
+	}
+
+	float getDecay()
+	{
+		return decay;
+	}
+
+	float getSustain()
+	{
+		return sustain;
+	}
+
+	float getRelease()
+	{
+		return release;
+	}
+
+	void setAttack(float value)
+	{
+		if(value >= 0 && value <= 1)
+			attack = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+
+	void setDecay(float value)
+			{
+		if(value >= 0 && value <= 1)
+			decay = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+	void setSustain(float value)
+	{
+		if(value >= 0 && value <= 1)
+			sustain = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+	void setRelease(float value)
+	{
+		if(value >= 0 && value <= 1)
+			release = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+	long getAttackTime()
+	{
+		return attackTime;
+	}
+	long getDecayTime()
+	{
+		return decayTime;
+	}
+
+	long getSustainTime()
+	{
+		return sustainTime;
+	}
+
+	long getReleaseTime()
+	{
+		return releaseTime;
+	}
+
+	void setAttackTime(long value)
+	{
+		if(value >= 0)
+			attackTime = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}
+	}
+
+	void setDecayTime(long value)
+	{
+		if(value >= 0 && value >= attackTime)
+			decayTime = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}		
+	}
+
+	void setSustainTime(long value)
+	{
+		if(value >= 0 && value >= decayTime)
+			sustainTime = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}		
+	}
+	void setReleaseTime(long value)
+	{
+		if(value >= 0 && value >= sustainTime)
+			releaseTime = value;
+		else
+		{
+			Logger::writeToLog(String("unexpected negative value ")
+							   + String(__LINE__)
+							   + String(__FILE__)
+							   );
+		}		
+	}
+	void setReversed(bool value)
+	{
+		isReversed = value;
+	}
+
+	bool getReversed()
+	{
+		return isReversed;
+	}
+	bool getADSREnabled()
+	{
+		return isADSREnabled;
+	}
+	void setADSREnabled(bool value)
+	{
+		isADSREnabled = value;
+	}
 };
 
 #endif
