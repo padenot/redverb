@@ -77,7 +77,19 @@ protected:
 	 * This stores the actual data of the file loaded.
 	 */
 	AudioSampleBuffer* internalBuffer;
+	/**
+	 * @brief The raw impulse, unprocessed.
+	 */
+	AudioSampleBuffer* internalBufferOriginal;
+	/**
+	 * @brief Backup for the buffer.
+	 *
+	 * This avoid the delete/new cost.
+	 */
+	AudioSampleBuffer* internalBufferBackup;
 	
+	bool needsProcessing;
+
 	/**
 	 * The begining of the impulse, in samples.
 	 */
@@ -89,10 +101,10 @@ protected:
 	/**
 	 * The values of the ADSR filter, in dB.
 	 */
-	float attack; ///< Attack, in dB.
-	float decay; ///< Decay, in dB.
-	float sustain; ///< Sustain, in dB.
-	float release; ///< Release, in dB.
+	float attack; ///< Attack slope.
+	float decay; ///< Decay slope.
+	float sustain; ///< Sustain slope.
+	float release; ///< Release slope.
 	/**
 	 * The positions of the ADSR filter, in samples.
 	 */
@@ -141,9 +153,11 @@ public:
 	 *
 	 * The array returned corresponds to the internalBuffer values, 
 	 * as if all the effects were turned off.
+	 * 
 	 *
 	 * @param channel The channel that has to be returned. Is channel == 0, all
-	 *                will be returned.
+	 *                will be returned. No check is performed on the validity of
+	 *				  the index.
 	 * @return The raw data of the channel(s) specified.
 	 */
 	float** GetRawDataUnprocessed(int channel = 0);
@@ -158,6 +172,8 @@ public:
 	 *			   is expressed id dB.
 	 */
 	double Normalize(float gain = 0.0f);
+
+	void applyFilters();
 	/*********** Getters // Setters ************/
 	long getStart()
 	{
