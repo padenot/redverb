@@ -15,22 +15,20 @@
  *  along with RedVerb.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#ifndef REDVERBGUI_H
-#define REDVERBGUI_H
+#ifndef ADSRWIDGET_H
+#define ADSRWIDGET_H
 
 #include "redverbEngine.h"
-#include "RedverbLookAndFeel.h"
-#include "widgets/AdsrWidget.h"
+//#include "RedverbLookAndFeel.h"
 
 
 /**
- * @brief GUI for the reverb engine.
+ * @brief widget managing ADSR manipulations.
  *
- * This class handle the GUI part of the reverb. 
+ * This class handle the ADSR modification on the impulse. 
  */
-class RedverbGUI   : public AudioProcessorEditor,
-                              public ChangeListener,
-                              public SliderListener
+class AdsrWidget   : public ChangeListener, public Component
+                              
 {
 public:
     /** Constructor.
@@ -38,20 +36,17 @@ public:
         When created, this will register itself with the filter for changes. It's
         safe to assume that the filter won't be deleted before this object is.
     */
-    RedverbGUI (RedverbEngine* const ownerFilter);
+    AdsrWidget (RedverbEngine* const ownerFilter);
 
     /** Destructor. */
-    ~RedverbGUI();
+    ~AdsrWidget();
 
     //==============================================================================
 	/**
 	 * @brief Called when parameter change occur.
 	 */
     void changeListenerCallback (void* source);
-	/**
-	 * @brief Called when a slider is moved.
-	 */
-    void sliderValueChanged (Slider*);
+
 
     //==============================================================================
     /**
@@ -68,38 +63,30 @@ public:
 private:
     //==============================================================================
 	/**
-	 * @brief Slider for the feedback.
+	 * @brief Fixed anchor point for the begining of attack
 	 */
-	Slider* feedbackSlider;
-	/**
-	 * @brief Slider for the gain.
-	 */
-    Slider* gainSlider;
-	/**
-	 * @brief Slider for the delay length.
-	 */
-	Slider* delaySlider;
-	/**
-	 * @brief Slider for the dry gain value.
-	 */
-    Slider* drySlider;
-	/**
-	 * @brief Slider for the dry wet value.
-	 */
-    Slider* wetSlider;
-	/**
-	 * @brief Adsr Componnent.
-	 */
-    AdsrWidget* adsrWid;
-
-
-
-
+	//AdsrHandleWidget* attackAdsrHandle;
 
 	/**
-	 * @brief To make the GUI resizable.
+	 * @brief Handle for the begining of decay
 	 */
-	ResizableCornerComponent* resizer;
+	//AdsrHandleWidget* decayAdsrHandle;
+
+	/**
+	 * @brief Handle for the begining of sustain
+	 */
+	//AdsrHandleWidget* sustainAdsrHandle;
+
+	/**
+	 * @brief Handle for the begining of release
+	 */
+	//AdsrHandleWidget* releaseAdsrHandle;
+
+	/**
+	 * @brief horizontal anchor point for the end of the impulse
+	 */
+	//AdsrHandleWidget* endAdsrHandle;
+
 	/**
 	 * @brief To constraint the window size.
 	 */
@@ -114,10 +101,10 @@ private:
 	 */
     void updateParametersFromFilter();
 
-    /**
-	 * @brief Avoid the cast whenever needed.
+	/**
+	 * @brief A pointeur to the filtre itself
 	 */
-    RedverbEngine* getFilter() const throw()       { return (RedverbEngine*) getAudioProcessor(); }
+	RedverbEngine* filter;
 };
 
 

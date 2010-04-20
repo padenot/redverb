@@ -238,6 +238,26 @@
 					RelativePath="..\..\src\RedverbLookAndFeel.h"
 					>
 				</File>
+				<Filter
+					Name="widgets"
+					>
+					<File
+						RelativePath="..\..\src\widgets\AdsrHandleWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\widgets\AdsrHandleWidget.h"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\widgets\AdsrWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\..\src\widgets\AdsrWidget.h"
+						>
+					</File>
+				</Filter>
 			</Filter>
 			<Filter
 				Name="juce"

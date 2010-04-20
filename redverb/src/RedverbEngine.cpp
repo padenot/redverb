@@ -36,8 +36,8 @@ RedverbEngine::RedverbEngine()
 	feedback = 0.5f;
 	delay = 300.0f;
 	cursor = 0;//??what is that
-	dryGain = 0.0f;
-	wetGain= 0.0f;
+	dryGain = 1.0f;
+	wetGain= 1.0f;
 
     lastUIWidth = 400;
     lastUIHeight = 140;

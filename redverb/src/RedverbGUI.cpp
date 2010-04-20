@@ -17,6 +17,7 @@
 
 #include "includes.h"
 #include "redverbGUI.h"
+#include "widgets/AdsrWidget.h"
 
 
 
@@ -58,7 +59,6 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     drySlider->addListener (this);
     drySlider->setRange (0, 1.25, 0.01);
 	drySlider->setDoubleClickReturnValue(true,1.0);
-	drySlider->setValue(1.0);
     drySlider->setTooltip (T("This slider sets the dry gain ratio."));
 
 	drySlider->setValue (ownerFilter->getParameter (3),false);
@@ -72,11 +72,17 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     wetSlider->addListener (this);
     wetSlider->setRange (0, 1.25, 0.01);
 	wetSlider->setDoubleClickReturnValue(true,1.0);
-	wetSlider->setValue(1.0);
     wetSlider->setTooltip (T("This slider sets the wet gain ratio."));
 
 
 	wetSlider->setValue (ownerFilter->getParameter(4),false);
+
+	/** Custom Slider WET **/
+	addAndMakeVisible (adsrWid = new AdsrWidget (getFilter()));
+	//adsrWid->setTooltip (T("This slider sets the wet gain ratio."));
+
+
+
 
 
 
@@ -126,6 +132,8 @@ void RedverbGUI::resized()
 
 	drySlider->setBounds(552, 183, 6, 144);
 	wetSlider->setBounds(579, 183, 6, 144);
+
+	adsrWid->setBounds(15,178,507,136);
 
     // if we've been resized, tell the filter so that it can store the new size
     // in its settings
