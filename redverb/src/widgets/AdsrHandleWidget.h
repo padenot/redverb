@@ -1,0 +1,86 @@
+/**
+ *  This file is part of RedVerb.
+ *
+ *  RedVerb is free software: you can redistribute it and/or modify
+ *  it under the terms of the GNU Lesser General Public License as
+ *  published by the Free Software Foundation, either version 3 of
+ *  the License, or (at your option) any later version.
+ *
+ *  RedVerb is distributed in the hope that it will be useful,
+ *  but WITHOUT ANY WARRANTY; without even the implied warranty of
+ *  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ *  GNU Lesser General Public License for more details.
+ *
+ *  You should have received a copy of the GNU Lesser General Public License
+ *  along with RedVerb.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
+#ifndef ADSRHANDLEWIDGET_H
+#define ADSRHANDLEWIDGET_H
+
+//#include "redverbEngine.h"
+//#include "RedverbLookAndFeel.h"
+
+
+/**
+ * @brief widget managing ADSR manipulations.
+ *
+ * This class handle the ADSR modification on the impulse. 
+ */
+class AdsrHandleWidget   : public Component
+                              
+{
+public:
+    /** Constructor.
+
+        When created, this will register itself with the filter for changes. It's
+        safe to assume that the filter won't be deleted before this object is.
+    */
+    AdsrHandleWidget (Component* theParent);
+
+    /** Destructor. */
+    ~AdsrHandleWidget();
+
+    //==============================================================================
+
+	void mouseDown (const MouseEvent& e);
+
+    void mouseDrag (const MouseEvent& e);
+
+    //==============================================================================
+    /**
+	 * @brief Callback for painting.
+	 */
+    void paint (Graphics& g);
+
+    /**
+	 * @brief Callback for resize.
+	 */
+    void resized();
+
+
+private:
+    //==============================================================================
+	
+	/**
+	 * @brief To constraint the window size.
+	 */
+    ComponentBoundsConstrainer resizeLimits;
+
+
+	/**
+	 * @brief Parent Component.
+	 */
+	Component* parent;
+
+	/**
+	 * @brief Dragger usefull to allow to drag the handle.
+	 */
+	ComponentDragger dragger;
+
+
+
+};
+
+
+#endif

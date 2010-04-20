@@ -35,6 +35,9 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
     // method.
 
     filter->addChangeListener (this);
+
+	addAndMakeVisible (attackAdsrHandle = new AdsrHandleWidget(this));
+	
 }
 
 AdsrWidget::~AdsrWidget()
@@ -50,26 +53,17 @@ void AdsrWidget::paint (Graphics& g)
     // just clear the window
     g.fillAll (Colours::red.withAlpha (0.2f));
 
-	
+	//draw somes axis
+	Colour c1(128,128,128);
+	g.setColour(c1);
+	g.drawArrow(5,(float)(getHeight()/2),(float)(getWidth()-5),(float)(getHeight()/2),2,6,6);
 
 }
 
 void AdsrWidget::resized()
 {
 	//setBounds(0,0,600,350);
- //   gainSlider->setBounds (10, 10, 200, 22);
-
-	//feedbackSlider->setBounds(10, 40, 200, 22);
-
-	//delaySlider->setBounds(10, 70, 200, 22);
-
-	//drySlider->setBounds(552, 183, 6, 144);
-	//wetSlider->setBounds(579, 183, 6, 144);
-
-    // if we've been resized, tell the filter so that it can store the new size
-    // in its settings
-    //getFilter()->lastUIWidth = getWidth();
-    //getFilter()->lastUIHeight = getHeight();
+	attackAdsrHandle->setBounds(20,20,10,10);
 }
 
 //==============================================================================

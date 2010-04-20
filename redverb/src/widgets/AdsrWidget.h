@@ -20,6 +20,7 @@
 
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
+#include "AdsrHandleWidget.h"
 
 
 /**
@@ -65,7 +66,7 @@ private:
 	/**
 	 * @brief Fixed anchor point for the begining of attack
 	 */
-	//AdsrHandleWidget* attackAdsrHandle;
+	AdsrHandleWidget* attackAdsrHandle;
 
 	/**
 	 * @brief Handle for the begining of decay
