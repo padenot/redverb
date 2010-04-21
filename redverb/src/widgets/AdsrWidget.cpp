@@ -20,6 +20,7 @@
 
 
 
+
 //==============================================================================
 AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 		//:Component()//?required?
@@ -36,8 +37,19 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 
     filter->addChangeListener (this);
 
-	addAndMakeVisible (attackAdsrHandle = new AdsrHandleWidget(this));
+	addAndMakeVisible (adsrHandleArray[0] = new AdsrHandleWidget(this,0,AdsrHandleWidget::MOVE_HORIZONTAL));
+	addAndMakeVisible (adsrHandleArray[1]= new AdsrHandleWidget(this,1,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	addAndMakeVisible (adsrHandleArray[2] = new AdsrHandleWidget(this,2,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	addAndMakeVisible (adsrHandleArray[3] = new AdsrHandleWidget(this,3,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	addAndMakeVisible (adsrHandleArray[4] = new AdsrHandleWidget(this,4,AdsrHandleWidget::MOVE_HORIZONTAL));
 	
+	adsrHandleArray[0]->setBounds(20,20,10,10);
+	adsrHandleArray[1]->setBounds(40,20,10,10);
+	adsrHandleArray[2]->setBounds(60,20,10,10);
+	adsrHandleArray[3]->setBounds(80,20,10,10);
+	adsrHandleArray[4]->setBounds(100,20,10,10);
+
+
 }
 
 AdsrWidget::~AdsrWidget()
@@ -63,7 +75,39 @@ void AdsrWidget::paint (Graphics& g)
 void AdsrWidget::resized()
 {
 	//setBounds(0,0,600,350);
-	attackAdsrHandle->setBounds(20,20,10,10);
+
+}
+
+
+
+bool AdsrWidget::CanHandleMoveHere(int handleIndex, int x, int y){
+	//remember, the goal of the method is to determine whether the handle can move where it is asked or not.
+	//causes that might block the handle :
+		// going outside the widget
+		// going after the next handle or before the previous one.
+		// for the first, going before the time origine
+		// for the last, goind after the end of the impulse.
+
+	if(x < 5){ //5 pixels far from the left edge of the widget
+		return false;
+	}
+
+	if(x > getWidth() - 5){ //5 pixels far from the right edge of the widget
+		return false;
+	}
+	
+	if(y < 5){ //5 pixels far from the top edge of the widget
+		return false;
+	}
+
+	if(y > getHeight() - 5){ //5 pixels far from the bottom edge of the widget
+		return false;
+	}
+
+
+	
+
+	return true;
 }
 
 //==============================================================================
@@ -73,6 +117,8 @@ void AdsrWidget::changeListenerCallback (void* source)
     // display of the time, midi message, etc.
     updateParametersFromFilter();
 }
+
+
 
 
 //==============================================================================

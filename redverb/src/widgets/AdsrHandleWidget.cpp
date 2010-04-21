@@ -17,11 +17,13 @@
 
 #include "includes.h"
 #include "AdsrHandleWidget.h"
+#include "AdsrWidget.h"
 
 
 
 //==============================================================================
-AdsrHandleWidget::AdsrHandleWidget (Component* theParent):parent(theParent)
+AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int index, int moves)
+	:parent(theParent), handleIndex(index),moveLiberty(moves)
 {
 	
     // set our component's initial size
@@ -75,10 +77,17 @@ void AdsrHandleWidget::mouseDown (const MouseEvent& e)
 void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 {
      MouseEvent e2 (e.getEventRelativeTo (parent));
-	 int y = getY();
-	 if(e2.getPosition().getX() > 0){
+	 int x= e2.getPosition().getX();
+	 int y= e2.getPosition().getY();
+
+	 if(!(moveLiberty & MOVE_VERTICAL))
+		y = getY();		
+	 if(!(moveLiberty & MOVE_HORIZONTAL))
+		x = getX();
+
+	 if( parent->CanHandleMoveHere(handleIndex, x, y)){
 		 dragger.dragComponent (this, e);
-		 setBounds(getX(),y,getWidth(),getHeight());
+		 setBounds(x,y,getWidth(),getHeight());
 	 }
 }
 //==============================================================================

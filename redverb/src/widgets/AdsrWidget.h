@@ -21,7 +21,7 @@
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
 #include "AdsrHandleWidget.h"
-
+class AdsrHandleWidget ;//WTF?!
 
 /**
  * @brief widget managing ADSR manipulations.
@@ -60,33 +60,19 @@ public:
 	 */
     void resized();
 
+	/**
+	 * @brief Test if the handle is allowed to move at this coordonates.
+	 */
+    bool CanHandleMoveHere(int handleIndex,int x, int y);
+
 
 private:
     //==============================================================================
 	/**
-	 * @brief Fixed anchor point for the begining of attack
+	 * @brief Array of handles
 	 */
-	AdsrHandleWidget* attackAdsrHandle;
+	AdsrHandleWidget* adsrHandleArray[5];
 
-	/**
-	 * @brief Handle for the begining of decay
-	 */
-	//AdsrHandleWidget* decayAdsrHandle;
-
-	/**
-	 * @brief Handle for the begining of sustain
-	 */
-	//AdsrHandleWidget* sustainAdsrHandle;
-
-	/**
-	 * @brief Handle for the begining of release
-	 */
-	//AdsrHandleWidget* releaseAdsrHandle;
-
-	/**
-	 * @brief horizontal anchor point for the end of the impulse
-	 */
-	//AdsrHandleWidget* endAdsrHandle;
 
 	/**
 	 * @brief To constraint the window size.
@@ -106,6 +92,10 @@ private:
 	 * @brief A pointeur to the filtre itself
 	 */
 	RedverbEngine* filter;
+
+	
+
+
 };
 
 

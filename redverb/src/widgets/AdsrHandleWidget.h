@@ -20,7 +20,8 @@
 
 //#include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
-
+#include "AdsrWidget.h"
+class AdsrWidget ;//WTF?!
 
 /**
  * @brief widget managing ADSR manipulations.
@@ -31,12 +32,23 @@ class AdsrHandleWidget   : public Component
                               
 {
 public:
+
+	/** 
+	 * @brief Flag definition for the allowed movements
+	 */
+	enum{
+		MOVE_NONE = 0,
+		MOVE_HORIZONTAL = 1,
+		MOVE_VERTICAL = 2
+	};
+
+
     /** Constructor.
 
         When created, this will register itself with the filter for changes. It's
         safe to assume that the filter won't be deleted before this object is.
     */
-    AdsrHandleWidget (Component* theParent);
+	AdsrHandleWidget (AdsrWidget* theParent,int index, int moves = MOVE_HORIZONTAL | MOVE_VERTICAL);
 
     /** Destructor. */
     ~AdsrHandleWidget();
@@ -71,12 +83,26 @@ private:
 	/**
 	 * @brief Parent Component.
 	 */
-	Component* parent;
+	AdsrWidget* parent;
+
+	/**
+	 * @brief index of the handle
+	 */
+	int handleIndex;
+
+	/** 
+	 * @brief allowed move direction of the handle
+	 */
+	int moveLiberty;
+
+
 
 	/**
 	 * @brief Dragger usefull to allow to drag the handle.
 	 */
 	ComponentDragger dragger;
+
+
 
 
 
