@@ -48,10 +48,12 @@ public:
         When created, this will register itself with the filter for changes. It's
         safe to assume that the filter won't be deleted before this object is.
     */
-	AdsrHandleWidget (AdsrWidget* theParent,int index, int moves = MOVE_HORIZONTAL | MOVE_VERTICAL);
+	AdsrHandleWidget (AdsrWidget* theParent, int x, int y, int moves = MOVE_HORIZONTAL | MOVE_VERTICAL);
 
     /** Destructor. */
     ~AdsrHandleWidget();
+
+	bool operator< (const AdsrHandleWidget& other);
 
     //==============================================================================
 
@@ -85,10 +87,7 @@ private:
 	 */
 	AdsrWidget* parent;
 
-	/**
-	 * @brief index of the handle
-	 */
-	int handleIndex;
+
 
 	/** 
 	 * @brief allowed move direction of the handle

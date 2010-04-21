@@ -22,21 +22,25 @@
 
 
 //==============================================================================
-AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int index, int moves)
-	:parent(theParent), handleIndex(index),moveLiberty(moves)
+AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int x, int y, int moves)
+:parent(theParent),moveLiberty(moves)
 {
 	
-    // set our component's initial size
-    setSize (10,10);
+  setBounds(x-5,y-5,10,10);
 
-
-
+  
 }
 
 AdsrHandleWidget::~AdsrHandleWidget()
 {
 	//nothing to do
 }
+
+
+bool AdsrHandleWidget::operator< (const AdsrHandleWidget& other){
+	return getX() < other.getX();
+}
+
 
 //==============================================================================
 void AdsrHandleWidget::paint (Graphics& g)
@@ -85,7 +89,7 @@ void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 	 if(!(moveLiberty & MOVE_HORIZONTAL))
 		x = getX();
 
-	 if( parent->CanHandleMoveHere(handleIndex, x, y)){
+	 if( parent->CanHandleMoveHere(this, x, y)){
 		 dragger.dragComponent (this, e);
 		 setBounds(x,y,getWidth(),getHeight());
 	 }

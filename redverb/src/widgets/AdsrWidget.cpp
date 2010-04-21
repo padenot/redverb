@@ -37,17 +37,19 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 
     filter->addChangeListener (this);
 
-	addAndMakeVisible (adsrHandleArray[0] = new AdsrHandleWidget(this,0,AdsrHandleWidget::MOVE_HORIZONTAL));
-	addAndMakeVisible (adsrHandleArray[1]= new AdsrHandleWidget(this,1,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	addAndMakeVisible (adsrHandleArray[2] = new AdsrHandleWidget(this,2,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	addAndMakeVisible (adsrHandleArray[3] = new AdsrHandleWidget(this,3,AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	addAndMakeVisible (adsrHandleArray[4] = new AdsrHandleWidget(this,4,AdsrHandleWidget::MOVE_HORIZONTAL));
 	
-	adsrHandleArray[0]->setBounds(20,20,10,10);
-	adsrHandleArray[1]->setBounds(40,20,10,10);
-	adsrHandleArray[2]->setBounds(60,20,10,10);
-	adsrHandleArray[3]->setBounds(80,20,10,10);
-	adsrHandleArray[4]->setBounds(100,20,10,10);
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 20, 20, AdsrHandleWidget::MOVE_HORIZONTAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 40, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 60, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 80, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 100, 20, AdsrHandleWidget::MOVE_HORIZONTAL));
+
+	std::set<AdsrHandleWidget*>::iterator it;
+	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
+		addAndMakeVisible (*it);
+
+	
+	
 
 
 }
@@ -80,7 +82,7 @@ void AdsrWidget::resized()
 
 
 
-bool AdsrWidget::CanHandleMoveHere(int handleIndex, int x, int y){
+bool AdsrWidget::CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr, int x, int y){
 	//remember, the goal of the method is to determine whether the handle can move where it is asked or not.
 	//causes that might block the handle :
 		// going outside the widget

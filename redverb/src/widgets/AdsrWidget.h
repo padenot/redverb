@@ -17,6 +17,7 @@
 
 #ifndef ADSRWIDGET_H
 #define ADSRWIDGET_H
+#include <set>
 
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
@@ -63,7 +64,7 @@ public:
 	/**
 	 * @brief Test if the handle is allowed to move at this coordonates.
 	 */
-    bool CanHandleMoveHere(int handleIndex,int x, int y);
+    bool CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr,int x, int y);
 
 
 private:
@@ -71,7 +72,7 @@ private:
 	/**
 	 * @brief Array of handles
 	 */
-	AdsrHandleWidget* adsrHandleArray[5];
+	std::set<AdsrHandleWidget*> adsrHandleSet;
 
 
 	/**
