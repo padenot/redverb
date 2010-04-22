@@ -17,11 +17,21 @@
 
 #include "includes.h"
 #include "AdsrWidget.h"
+#include <set>
 
 
 
 
 //==============================================================================
+
+	 
+bool AdsrWidget::ltAdsrHandleWidgetPtr::operator()(const AdsrHandleWidget* s1, const AdsrHandleWidget* s2) const{
+	return s1->getX() < s2->getX();
+}
+
+
+
+
 AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 		//:Component()//?required?
 {
@@ -44,9 +54,12 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 	adsrHandleSet.insert(new AdsrHandleWidget(this, 80, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
 	adsrHandleSet.insert(new AdsrHandleWidget(this, 100, 20, AdsrHandleWidget::MOVE_HORIZONTAL));
 
-	std::set<AdsrHandleWidget*>::iterator it;
+	AdsrHandleSetType::iterator it;
 	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
-		addAndMakeVisible (*it);
+		addAndMakeVisible(*it);
+		//addAndMakeVisible (&*it);
+		//addAndMakeVisible( &(*it));
+	
 
 	
 	
@@ -71,6 +84,23 @@ void AdsrWidget::paint (Graphics& g)
 	Colour c1(128,128,128);
 	g.setColour(c1);
 	g.drawArrow(5,(float)(getHeight()/2),(float)(getWidth()-5),(float)(getHeight()/2),2,6,6);
+
+	AdsrHandleSetType::iterator it;
+	AdsrHandleSetType::iterator it2;
+
+	for (it = it2 = adsrHandleSet.begin() ; it2 != adsrHandleSet.end(); ){
+		it2 = it;
+		it2++;
+		if( it2 !=  adsrHandleSet.end()){
+			int x = (*it)->getX();
+			int y = (*it)->getY();
+			it++;
+			g.drawLine(x,y,(*it)->getX(),(*it)->getY(),2);
+		}
+		
+	
+	}
+	
 
 }
 
@@ -113,6 +143,20 @@ bool AdsrWidget::CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr, int x, int y
 }
 
 //==============================================================================
+
+void AdsrWidget::mouseDoubleClick (const MouseEvent& e){
+	AdsrHandleWidget* temp = new AdsrHandleWidget(this, e.getPosition().getX(), e.getPosition().getY(), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL);
+	
+	AdsrHandleSetType::iterator it = (adsrHandleSet.insert(temp)).first;
+	addAndMakeVisible (*it);
+	
+
+	repaint();
+	
+}
+
+
+
 void AdsrWidget::changeListenerCallback (void* source)
 {
     // this is the filter telling us that it's changed, so we'll update our

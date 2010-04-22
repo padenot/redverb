@@ -31,16 +31,34 @@ AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int x, int y, int move
   
 }
 
+AdsrHandleWidget::AdsrHandleWidget (const AdsrHandleWidget& other)
+
+{
+	parent = other.getParent();
+	moveLiberty = other.getMoveLiberty();
+	setBounds(other.getX()-5,other.getY()-5,10,10);
+
+  
+}
+
 AdsrHandleWidget::~AdsrHandleWidget()
 {
 	//nothing to do
 }
 
 
-bool AdsrHandleWidget::operator< (const AdsrHandleWidget& other){
+bool AdsrHandleWidget::operator< (const AdsrHandleWidget& other) const{
 	return getX() < other.getX();
 }
 
+
+AdsrWidget* AdsrHandleWidget::getParent() const {
+	return parent;
+}
+
+int AdsrHandleWidget::getMoveLiberty() const {
+	return moveLiberty;
+}
 
 //==============================================================================
 void AdsrHandleWidget::paint (Graphics& g)
@@ -49,7 +67,7 @@ void AdsrHandleWidget::paint (Graphics& g)
 	//draw somes axis
 	Colour c1(255,0,0);
 	g.setColour(c1);
-	g.drawEllipse(2,2,(float)getWidth()-4,(float)getHeight()-4,3);
+	g.drawEllipse(2,2,(float)getWidth()-4,(float)getHeight()-4,2);
 
 }
 
@@ -75,7 +93,12 @@ void AdsrHandleWidget::resized()
 
 void AdsrHandleWidget::mouseDown (const MouseEvent& e)
 {
-    dragger.startDraggingComponent (this, 0);
+	if(e.mods.isRightButtonDown()){
+		//delete me
+
+	}else if (e.mods.isLeftButtonDown()){
+		dragger.startDraggingComponent (this, 0);
+	}
 }
 
 void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
@@ -93,6 +116,7 @@ void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 		 dragger.dragComponent (this, e);
 		 setBounds(x,y,getWidth(),getHeight());
 	 }
+	 parent->repaint();
 }
 //==============================================================================
 

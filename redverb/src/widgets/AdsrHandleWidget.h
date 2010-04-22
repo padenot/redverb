@@ -33,6 +33,10 @@ class AdsrHandleWidget   : public Component
 {
 public:
 
+
+
+
+
 	/** 
 	 * @brief Flag definition for the allowed movements
 	 */
@@ -50,10 +54,16 @@ public:
     */
 	AdsrHandleWidget (AdsrWidget* theParent, int x, int y, int moves = MOVE_HORIZONTAL | MOVE_VERTICAL);
 
+	AdsrHandleWidget (const AdsrHandleWidget& other);
+
     /** Destructor. */
     ~AdsrHandleWidget();
 
-	bool operator< (const AdsrHandleWidget& other);
+	bool operator< (const AdsrHandleWidget& other) const ;
+
+	AdsrWidget* getParent() const ;
+
+	int getMoveLiberty() const ;
 
     //==============================================================================
 
@@ -100,10 +110,6 @@ private:
 	 * @brief Dragger usefull to allow to drag the handle.
 	 */
 	ComponentDragger dragger;
-
-
-
-
 
 };
 

@@ -18,11 +18,11 @@
 #ifndef ADSRWIDGET_H
 #define ADSRWIDGET_H
 #include <set>
-
+class AdsrHandleWidget ;//WTF?!
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
 #include "AdsrHandleWidget.h"
-class AdsrHandleWidget ;//WTF?!
+
 
 /**
  * @brief widget managing ADSR manipulations.
@@ -33,6 +33,8 @@ class AdsrWidget   : public ChangeListener, public Component
                               
 {
 public:
+
+
     /** Constructor.
 
         When created, this will register itself with the filter for changes. It's
@@ -44,6 +46,12 @@ public:
     ~AdsrWidget();
 
     //==============================================================================
+
+	/**
+	 * @brief Called when the user wants to add an handle.
+	 */
+	void mouseDoubleClick (const MouseEvent& e);
+
 	/**
 	 * @brief Called when parameter change occur.
 	 */
@@ -64,15 +72,24 @@ public:
 	/**
 	 * @brief Test if the handle is allowed to move at this coordonates.
 	 */
-    bool CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr,int x, int y);
+    bool CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr ,int x, int y);
 
 
 private:
     //==============================================================================
+
+	/** 
+	 * @brief Comparator tool to compare pointers of AdsrHandleWidget
+	 */
+	struct ltAdsrHandleWidgetPtr{
+		bool operator()(const AdsrHandleWidget* s1, const AdsrHandleWidget* s2) const;
+	};
+
 	/**
 	 * @brief Array of handles
 	 */
-	std::set<AdsrHandleWidget*> adsrHandleSet;
+	typedef std::set<AdsrHandleWidget*, ltAdsrHandleWidgetPtr> AdsrHandleSetType;
+	AdsrHandleSetType adsrHandleSet;
 
 
 	/**
@@ -93,8 +110,6 @@ private:
 	 * @brief A pointeur to the filtre itself
 	 */
 	RedverbEngine* filter;
-
-	
 
 
 };
