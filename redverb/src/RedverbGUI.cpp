@@ -159,9 +159,9 @@ void RedverbGUI::resized()
     getFilter()->lastUIHeight = getHeight();
 }
 
-void RedverbGUI::setInfoLabelText(std::string newText)
+void RedverbGUI::setInfoLabelText(juce::String newText)
 {
-	infoLabel->setText(newText);
+	infoLabel->setText(newText, false);
 }
 
 

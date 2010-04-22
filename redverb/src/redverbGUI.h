@@ -53,7 +53,7 @@ public:
 	 */
     void sliderValueChanged (Slider*);
 
-	void setInfoLabelText(std::string newText);
+	void setInfoLabelText(juce::String newText);
 
     //==============================================================================
     /**
