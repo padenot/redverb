@@ -54,5 +54,7 @@ class RedverbLookAndFeel : public LookAndFeel
 						   const float rotaryStartAngle,
 						   const float rotaryEndAngle,
    						   Slider& slider);
+
+
 };
 

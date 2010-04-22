@@ -16,6 +16,9 @@
  */
 
 #include "RedverbLookAndFeel.h"
+#include <math.h>
+
+#define Pi 3.14159265358979323846 
 
 void RedverbLookAndFeel::drawLinearSliderThumb (Graphics &g, int x, int y, int width, int height,
 			 float sliderPos, float minSliderPos, float maxSliderPos, const Slider::SliderStyle style, Slider &slider)
@@ -51,6 +54,18 @@ void RedverbLookAndFeel::drawLinearSliderBackground (Graphics &g, int x, int y, 
 void RedverbLookAndFeel::drawRotarySlider(Graphics &g, int x, int y, int width, int height,
 		 		float sliderPosProportional, const float rotaryStartAngle, const float rotaryEndAngle,	Slider& slider)
 {
-
+	
+	float linThickness = 9.f;
+	float radius = 13.0f;
+	float length = 7.0f;
+	float angle = Pi/5 + slider.getValue()/(slider.getMaximum() - slider.getMinimum())*8/5*Pi + Pi/2;
+	float startX = x + width/2 + cos(angle)* radius;
+	float startY = y + height/2 + sin(angle) * radius;
+	float endX = x + width/2 + cos(angle)* (radius+length);
+	float endY = y + height/2 + sin(angle) * (radius+length);
+	
+	Colour c2((uint8)0,(uint8)0,(uint8)0);
+	g.setColour(c2);
+	g.drawLine(startX, startY, endX, endY, 3.5f);
 }
 

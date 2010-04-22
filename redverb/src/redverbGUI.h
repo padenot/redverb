@@ -21,7 +21,7 @@
 #include "redverbEngine.h"
 #include "RedverbLookAndFeel.h"
 #include "widgets/AdsrWidget.h"
-
+#include <string>
 
 /**
  * @brief GUI for the reverb engine.
@@ -53,6 +53,8 @@ public:
 	 */
     void sliderValueChanged (Slider*);
 
+	void setInfoLabelText(std::string newText);
+
     //==============================================================================
     /**
 	 * @brief Callback for painting.
@@ -67,6 +69,12 @@ public:
 
 private:
     //==============================================================================
+	/**
+	 * @brief Label that displays the values of the components being used.
+	 */
+	Label* infoLabel;
+
+	
 	/**
 	 * @brief Slider for the feedback.
 	 */
@@ -87,6 +95,12 @@ private:
 	 * @brief Slider for the dry wet value.
 	 */
     Slider* wetSlider;
+
+	/**
+	 * @brief Rotary slider for the pre-delay.
+	 */
+	Slider* rotaryPreDelay;
+
 	/**
 	 * @brief Adsr Componnent.
 	 */

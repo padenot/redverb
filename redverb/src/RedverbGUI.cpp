@@ -19,16 +19,29 @@
 #include "redverbGUI.h"
 #include "widgets/AdsrWidget.h"
 
-
+#define Pi 3.14159265358979323846 
 
 //==============================================================================
 RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     : AudioProcessorEditor (ownerFilter)
 {
+	// create our information Label
+	addAndMakeVisible(infoLabel = new Label(T("infoLabel"), "labelText") );
+	infoLabel->setColour(Label::textColourId, Colour(255,255,255));
+	// create our predelay knob.. TODO
+    addAndMakeVisible(rotaryPreDelay = new Slider (T("gain"))); //TODO change that "gain" stuff here, i actually use it to check the knob's value...
+	rotaryPreDelay->setSliderStyle(Slider::Rotary);
+	rotaryPreDelay->setTextBoxStyle(Slider::NoTextBox,true, 0,0);
+	rotaryPreDelay->setRotaryParameters(-4*Pi/5, 4*Pi/5, true);
+	rotaryPreDelay->setLookAndFeel(new RedverbLookAndFeel());
+    rotaryPreDelay->addListener (this);
+    rotaryPreDelay->setRange (0.0, 1000.0, 0.01);
+	rotaryPreDelay->setTooltip (T("changes the pre-delay parameter.."));
+
     // create our gain slider..
     addAndMakeVisible (gainSlider = new Slider (T("gain")));
     gainSlider->addListener (this);
-    gainSlider->setRange (0.0, 1.0, 0.01);
+    gainSlider->setRange (0.0, 1000.0, 0.01);
     gainSlider->setTooltip (T("changes the volume of the audio that runs through the plugin.."));
 
 	
@@ -124,11 +137,16 @@ void RedverbGUI::paint (Graphics& g)
 void RedverbGUI::resized()
 {
 	setBounds(0,0,600,350);
+	
+	infoLabel->setBounds(10,320, 560, 30 );
+
     gainSlider->setBounds (10, 10, 200, 22);
+
+	rotaryPreDelay->setBounds (529, 97, 55, 55);
 
 	feedbackSlider->setBounds(10, 40, 200, 22);
 
-	delaySlider->setBounds(10, 70, 200, 22);
+	delaySlider->setBounds(10, 75, 200, 22);
 
 	drySlider->setBounds(552, 183, 6, 144);
 	wetSlider->setBounds(579, 183, 6, 144);
@@ -140,6 +158,12 @@ void RedverbGUI::resized()
     getFilter()->lastUIWidth = getWidth();
     getFilter()->lastUIHeight = getHeight();
 }
+
+void RedverbGUI::setInfoLabelText(std::string newText)
+{
+	infoLabel->setText(newText);
+}
+
 
 //==============================================================================
 void RedverbGUI::changeListenerCallback (void* source)
