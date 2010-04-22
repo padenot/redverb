@@ -58,6 +58,12 @@ public:
     void changeListenerCallback (void* source);
 
 
+	/**
+	 * @brief sets the envelope to a classic ADSR
+	 */
+	void setBaseADSR();
+
+
     //==============================================================================
     /**
 	 * @brief Callback for painting.
@@ -78,6 +84,28 @@ public:
 	 * @brief Remove if allowed this handle
 	 */
     void RemoveHandle(AdsrHandleWidget* adsrHandlePtr);
+
+	/**
+	 * @brief Obtain the gain represented by pixel's y coordonate
+	 */
+	int GainToPixel( float gain );
+
+	/**
+	 * @brief obtain the pixel's y coordonate at the choosen gain
+	 */
+	float PixelToGain( int pixel );
+
+		/**
+	 * @brief Obtain the time represented by pixel's x coordonate
+	 */
+	int TimeToPixel( float time );
+
+	/**
+	 * @brief obtain the pixel's x coordonate at the choosen time
+	 */
+	float PixelToTime( int pixel );
+
+
 
 
 private:
@@ -115,6 +143,18 @@ private:
 	 * @brief A pointeur to the filtre itself
 	 */
 	RedverbEngine* filter;
+
+
+	/**
+	 * @brief the maximum gain
+	 */
+	//const static float maxGain  = 1.25f;
+
+	/**
+	 * @brief the impulse length in seconds
+	 */
+	//const static float impulseLength  = 10.0f;
+
 
 
 };

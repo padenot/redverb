@@ -51,19 +51,6 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
     filter->addChangeListener (this);
 
 	
-	adsrHandleSet.insert(new AdsrHandleWidget(this, 20, 20, AdsrHandleWidget::MOVE_HORIZONTAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, 40, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, 60, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, 80, 20, AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, 100, 20, AdsrHandleWidget::MOVE_HORIZONTAL));
-
-	AdsrHandleSetType::iterator it;
-	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
-		addAndMakeVisible(*it);
-		//addAndMakeVisible (&*it);
-		//addAndMakeVisible( &(*it));
-	
-
 	
 	
 
@@ -81,12 +68,13 @@ AdsrWidget::~AdsrWidget()
 void AdsrWidget::paint (Graphics& g)
 {
     // just clear the window
-    g.fillAll (Colours::red.withAlpha (0.2f));
+    //g.fillAll (Colours::whiter.withAlpha (0.2f));
 
 	//draw somes axis
 	Colour c1(128,128,128);
 	g.setColour(c1);
-	g.drawArrow(5,(float)(getHeight()/2),(float)(getWidth()-5),(float)(getHeight()/2),2,6,6);
+	g.drawArrow(5,(float)(getHeight() -5),(float)(getWidth()-5),(float)(getHeight()-5),2,6,6);
+	g.drawArrow(5,(float)(getHeight() -5),5,5,2,6,6);
 
 	AdsrHandleSetType::iterator it;
 	AdsrHandleSetType::iterator it2;
@@ -98,7 +86,7 @@ void AdsrWidget::paint (Graphics& g)
 			int x = (*it)->getCenterX();
 			int y = (*it)->getCenterY();
 			it++;
-			g.drawLine(x,y,(*it)->getCenterX(),(*it)->getCenterY(),2);
+			g.drawLine((float)x,(float)y,(float)(*it)->getCenterX(),(float)(*it)->getCenterY(),2);
 		}
 		
 	
@@ -111,6 +99,23 @@ void AdsrWidget::resized()
 {
 	//setBounds(0,0,600,350);
 
+}
+
+
+
+void AdsrWidget::setBaseADSR(){
+
+	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(0), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(1), GainToPixel(1.25f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(2), GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(3), GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(4), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
+
+	AdsrHandleSetType::iterator it;
+	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
+		addAndMakeVisible(*it);
+		//addAndMakeVisible (&*it);
+		//addAndMakeVisible( &(*it));
 }
 
 
@@ -235,4 +240,31 @@ void AdsrWidget::updateParametersFromFilter()
     filter->getCallbackLock().exit();
 
 
+}
+
+
+
+
+int AdsrWidget::GainToPixel( float gain ){
+	return (int) (getHeight() - 5 -   gain/1.25f * ( getHeight() - 10));
+	//return (int) getHeight() - gain/maxGain * ( getHeight() - 10);
+	//return 30;
+	//return  getHeight() - 5;
+}
+
+	
+float AdsrWidget::PixelToGain( int pixel ){
+	return 0;//todo : do it;
+}
+
+	
+int AdsrWidget::TimeToPixel( float time ){
+	//return 5 + time/impulseLength * (getWidth() -10 ) ;
+	return (int) (5 +  time/5.0f * (getWidth() -10 ) );
+	return 30;
+}
+
+	
+float AdsrWidget::PixelToTime( int pixel ){
+	return 0; //todo : do it;
 }
