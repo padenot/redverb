@@ -97,6 +97,26 @@ private:
     Slider* wetSlider;
 
 	/**
+	 * @brief Bar indicating the dry volume of the left side.
+	 */
+	Slider* leftDryVolume;
+
+	/**
+	 * @brief Bar indicating the dry volume of the left right.
+	 */
+	Slider* rightDryVolume;
+
+	/**
+	 * @brief Bar indicating the wet volume of the left side.
+	 */
+	Slider* leftWetVolume;
+
+	/**
+	 * @brief Bar indicating the wet volume of the right side.
+	 */
+	Slider* rightWetVolume;
+
+	/**
 	 * @brief Rotary slider for the pre-delay.
 	 */
 	Slider* rotaryPreDelay;

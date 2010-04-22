@@ -148,10 +148,16 @@ void RedverbGUI::resized()
 
 	delaySlider->setBounds(10, 75, 200, 22);
 
-	drySlider->setBounds(552, 183, 6, 144);
-	wetSlider->setBounds(579, 183, 6, 144);
+	/*
+	leftDryVolume->setBounds(535, 173, 5, 115);
+	rightDryVolume->setBounds(550, 173, 5, 115);
+	leftWetVolume->setBounds(570, 173, 5, 115);
+	rightWetVolume->setBounds(595, 173, 5, 115);
+	*/
+	drySlider->setBounds(540, 173, 10, 115);
+	wetSlider->setBounds(575, 173, 10, 115);
 
-	adsrWid->setBounds(15,178,507,136);//this dimension correspond to the display zone.
+	adsrWid->setBounds(10,90,495,225);//this dimension correspond to the display zone.
 
     // if we've been resized, tell the filter so that it can store the new size
     // in its settings
