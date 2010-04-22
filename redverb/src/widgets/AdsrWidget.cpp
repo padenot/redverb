@@ -92,10 +92,10 @@ void AdsrWidget::paint (Graphics& g)
 		it2 = it;
 		it2++;
 		if( it2 !=  adsrHandleSet.end()){
-			int x = (*it)->getX();
-			int y = (*it)->getY();
+			int x = (*it)->getCenterX();
+			int y = (*it)->getCenterY();
 			it++;
-			g.drawLine(x,y,(*it)->getX(),(*it)->getY(),2);
+			g.drawLine(x,y,(*it)->getCenterX(),(*it)->getCenterY(),2);
 		}
 		
 	
@@ -140,6 +140,22 @@ bool AdsrWidget::CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr, int x, int y
 	
 
 	return true;
+}
+
+
+
+void AdsrWidget::RemoveHandle(AdsrHandleWidget* adsrHandlePtr){
+	//should test in order not to remove the first and the last handle
+	if (adsrHandlePtr == *adsrHandleSet.begin()){
+		//nothing to do, shouldn't delete the first handle
+	}else if (adsrHandlePtr == *adsrHandleSet.rbegin()){
+		//nothing to do, shouldn't delete the last handle
+	}else{ //delete that handle
+		adsrHandleSet.erase(adsrHandlePtr);
+		delete adsrHandlePtr;
+		repaint();
+	}
+
 }
 
 //==============================================================================

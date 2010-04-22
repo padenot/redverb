@@ -95,6 +95,7 @@ void AdsrHandleWidget::mouseDown (const MouseEvent& e)
 {
 	if(e.mods.isRightButtonDown()){
 		//delete me
+		parent->RemoveHandle(this);
 
 	}else if (e.mods.isLeftButtonDown()){
 		dragger.startDraggingComponent (this, 0);
@@ -118,5 +119,16 @@ void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 	 }
 	 parent->repaint();
 }
+
+
+
+int AdsrHandleWidget::getCenterX(){
+	return getX()+getWidth()/2;
+}
+
+int AdsrHandleWidget::getCenterY(){
+	return getY()+getHeight()/2;
+}
+
 //==============================================================================
 

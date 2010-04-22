@@ -74,6 +74,11 @@ public:
 	 */
     bool CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr ,int x, int y);
 
+	/**
+	 * @brief Remove if allowed this handle
+	 */
+    void RemoveHandle(AdsrHandleWidget* adsrHandlePtr);
+
 
 private:
     //==============================================================================

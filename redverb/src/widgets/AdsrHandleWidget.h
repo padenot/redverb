@@ -82,6 +82,15 @@ public:
 	 */
     void resized();
 
+	/**
+	 * @brief returns the center's x coordonate
+	 */
+	int getCenterX();
+	/**
+	 * @brief returns the center's y coordonate
+	 */
+	int getCenterY();
+
 
 private:
     //==============================================================================
