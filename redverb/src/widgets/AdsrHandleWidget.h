@@ -91,6 +91,11 @@ public:
 	 */
 	int getCenterY();
 
+	/**
+	 * @brief gives a reference to the dragger
+	 */
+	//ComponentDragger& getDragger();
+
 
 private:
     //==============================================================================
@@ -118,7 +123,7 @@ private:
 	/**
 	 * @brief Dragger usefull to allow to drag the handle.
 	 */
-	ComponentDragger dragger;
+	//ComponentDragger dragger;
 
 };
 

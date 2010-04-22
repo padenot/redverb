@@ -19,6 +19,9 @@
 #include "AdsrWidget.h"
 #include <set>
 
+#define max(a,b) (((a)>(b)?(a):(b) ))
+#define min(a,b) (((a)<(b)?(a):(b) ))
+
 
 
 
@@ -112,34 +115,63 @@ void AdsrWidget::resized()
 
 
 
-bool AdsrWidget::CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr, int x, int y){
+void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x, int y, const MouseEvent& e){
 	//remember, the goal of the method is to determine whether the handle can move where it is asked or not.
 	//causes that might block the handle :
 		// going outside the widget
 		// going after the next handle or before the previous one.
 		// for the first, going before the time origine
 		// for the last, goind after the end of the impulse.
+	bool shouldMove = true;
 
-	if(x < 5){ //5 pixels far from the left edge of the widget
-		return false;
-	}
-
-	if(x > getWidth() - 5){ //5 pixels far from the right edge of the widget
-		return false;
-	}
 	
 	if(y < 5){ //5 pixels far from the top edge of the widget
-		return false;
+		y = 5;
 	}
 
 	if(y > getHeight() - 5){ //5 pixels far from the bottom edge of the widget
-		return false;
+		y = getHeight() - 5;
+	}
+
+	if (adsrHandlePtr == *adsrHandleSet.begin()){
+		//cannot go after the second handle
+		AdsrHandleSetType::iterator next = adsrHandleSet.begin();
+		next ++;
+		x = max(5,min( (*next)->getX() -5 , x)) ;
+
+	}else if (adsrHandlePtr == *adsrHandleSet.rbegin()){
+		//cannot go before the previous one
+		AdsrHandleSetType::reverse_iterator next = adsrHandleSet.rbegin();
+		next ++;
+		x = max((*next)->getX() +5,min( getWidth() - 5 , x)) ;
+		
+	}else{//any other handle
+		AdsrHandleSetType::iterator previous;
+		AdsrHandleSetType::iterator self;
+		AdsrHandleSetType::iterator next;
+		for (previous = self = adsrHandleSet.begin() ; *self != adsrHandlePtr; ){
+			self = previous;
+			self++;
+			if( *self !=  adsrHandlePtr){
+				previous++;	
+			}else{
+				next = self;
+				next++;
+			}
+		}
+
+		x = max((*previous)->getX() +5,min( (*next)->getX() - 5 , x)) ;
+
+
+		
+
 	}
 
 
 	
-
-	return true;
+		 //adsrHandlePtr->getDragger().dragComponent (adsrHandlePtr, e);
+		 adsrHandlePtr->setBounds(x,y,adsrHandlePtr->getWidth(),adsrHandlePtr->getHeight());
+	
 }
 
 

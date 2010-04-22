@@ -72,7 +72,7 @@ public:
 	/**
 	 * @brief Test if the handle is allowed to move at this coordonates.
 	 */
-    bool CanHandleMoveHere(AdsrHandleWidget* adsrHandlePtr ,int x, int y);
+    void MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr ,int x, int y, const MouseEvent& e);
 
 	/**
 	 * @brief Remove if allowed this handle

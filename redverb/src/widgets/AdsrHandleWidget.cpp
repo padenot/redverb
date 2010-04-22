@@ -59,6 +59,10 @@ AdsrWidget* AdsrHandleWidget::getParent() const {
 int AdsrHandleWidget::getMoveLiberty() const {
 	return moveLiberty;
 }
+/*
+ComponentDragger& AdsrHandleWidget::getDragger(){
+	return dragger;
+}*/
 
 //==============================================================================
 void AdsrHandleWidget::paint (Graphics& g)
@@ -98,7 +102,7 @@ void AdsrHandleWidget::mouseDown (const MouseEvent& e)
 		parent->RemoveHandle(this);
 
 	}else if (e.mods.isLeftButtonDown()){
-		dragger.startDraggingComponent (this, 0);
+		//dragger.startDraggingComponent (this, 0);
 	}
 }
 
@@ -113,10 +117,12 @@ void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 	 if(!(moveLiberty & MOVE_HORIZONTAL))
 		x = getX();
 
-	 if( parent->CanHandleMoveHere(this, x, y)){
+	 /*if( parent->CanHandleMoveHere(this, x, y)){
 		 dragger.dragComponent (this, e);
 		 setBounds(x,y,getWidth(),getHeight());
-	 }
+	 }*/
+	 parent->MoveHandleHereIfPossible(this, x, y, e);
+
 	 parent->repaint();
 }
 
