@@ -28,7 +28,7 @@ class AdsrWidget ;//WTF?!
  *
  * This class handle the ADSR modification on the impulse. 
  */
-class AdsrHandleWidget   : public Component
+class AdsrHandleWidget   : public Component, public ChangeBroadcaster
                               
 {
 public:
@@ -70,6 +70,8 @@ public:
 	void mouseDown (const MouseEvent& e);
 
     void mouseDrag (const MouseEvent& e);
+
+	void mouseUp (const MouseEvent& e);
 
     //==============================================================================
     /**

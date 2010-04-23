@@ -90,9 +90,10 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
 
 	wetSlider->setValue (ownerFilter->getParameter(4),false);
 
-	/** Custom Slider WET **/
-	addAndMakeVisible (adsrWid = new AdsrWidget (getFilter()));
-	//adsrWid->setTooltip (T("This slider sets the wet gain ratio."));
+	/** ADSRwidget **/
+	addAndMakeVisible (adsrWid = new AdsrWidget (this));
+	adsrWid->addChangeListener(this);
+
 
 
 
@@ -139,6 +140,7 @@ void RedverbGUI::resized()
 	setBounds(0,0,600,350);
 	
 	infoLabel->setBounds(10,320, 560, 30 );
+	setInfoLabelText(File::getCurrentWorkingDirectory().getFullPathName());
 
     gainSlider->setBounds (10, 10, 200, 22);
 
@@ -175,9 +177,20 @@ void RedverbGUI::setInfoLabelText(juce::String newText)
 //==============================================================================
 void RedverbGUI::changeListenerCallback (void* source)
 {
-    // this is the filter telling us that it's changed, so we'll update our
-    // display of the time, midi message, etc.
-    updateParametersFromFilter();
+	//warning ! change message might arrive from either the filtre OR the ADSR widget : TEST THAT
+
+	setInfoLabelText("changeListenerCallback called");
+	if(source == getFilter()){
+
+		// this is the filter telling us that it's changed, so we'll update our
+		// display of the time, midi message, etc.
+		updateParametersFromFilter();
+	}else if (source == adsrWid){
+		//getFilter()->setParameterNotifyingHost (0, adsrWid->getValues());
+		setInfoLabelText("handleChanged");
+		
+		
+	}
 }
 
 void RedverbGUI::sliderValueChanged (Slider* slider)   

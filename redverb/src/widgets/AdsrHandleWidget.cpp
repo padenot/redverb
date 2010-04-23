@@ -27,8 +27,8 @@ AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int x, int y, int move
 {
 	
   setBounds(x-5,y-5,10,10);
-
-  
+  addChangeListener(parent);
+   
 }
 
 AdsrHandleWidget::AdsrHandleWidget (const AdsrHandleWidget& other)
@@ -37,6 +37,7 @@ AdsrHandleWidget::AdsrHandleWidget (const AdsrHandleWidget& other)
 	parent = other.getParent();
 	moveLiberty = other.getMoveLiberty();
 	setBounds(other.getX()-5,other.getY()-5,10,10);
+	addChangeListener(other.getParent());
 
   
 }
@@ -126,7 +127,14 @@ void AdsrHandleWidget::mouseDrag (const MouseEvent& e)
 	 parent->repaint();
 }
 
-
+void AdsrHandleWidget::mouseUp (const MouseEvent& e)
+{
+	//just let the parent know it is interesting to refresh the filter's info
+	//if( ! e.mods.isRightButtonDown()){
+		sendChangeMessage(this);
+	//}
+		
+}
 
 int AdsrHandleWidget::getCenterX(){
 	return getX()+getWidth()/2;

@@ -18,6 +18,7 @@
 #ifndef ADSRWIDGET_H
 #define ADSRWIDGET_H
 #include <set>
+#include <vector>
 class AdsrHandleWidget ;//WTF?!
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
@@ -29,7 +30,7 @@ class AdsrHandleWidget ;//WTF?!
  *
  * This class handle the ADSR modification on the impulse. 
  */
-class AdsrWidget   : public ChangeListener, public Component
+class AdsrWidget   : public ChangeListener, public Component, public ChangeBroadcaster
                               
 {
 public:
@@ -40,7 +41,7 @@ public:
         When created, this will register itself with the filter for changes. It's
         safe to assume that the filter won't be deleted before this object is.
     */
-    AdsrWidget (RedverbEngine* const ownerFilter);
+    AdsrWidget (/*RedverbEngine* const ownerFilter*/ Component* theParent);
 
     /** Destructor. */
     ~AdsrWidget();
@@ -62,6 +63,10 @@ public:
 	 * @brief sets the envelope to a classic ADSR
 	 */
 	void setBaseADSR();
+
+	
+
+	std::vector<std::pair<float,float>> getValues();
 
 
     //==============================================================================
@@ -154,6 +159,8 @@ private:
 	 * @brief the impulse length in seconds
 	 */
 	//const static float impulseLength  = 10.0f;
+
+	Component* parent;
 
 
 

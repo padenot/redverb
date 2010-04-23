@@ -18,9 +18,12 @@
 #include "includes.h"
 #include "AdsrWidget.h"
 #include <set>
+#include <vector>
 
 #define max(a,b) (((a)>(b)?(a):(b) ))
 #define min(a,b) (((a)<(b)?(a):(b) ))
+
+#define MAXGAIN 1.25
 
 
 
@@ -35,10 +38,10 @@ bool AdsrWidget::ltAdsrHandleWidgetPtr::operator()(const AdsrHandleWidget* s1, c
 
 
 
-AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
+AdsrWidget::AdsrWidget (Component* theParent):parent(theParent)
 		//:Component()//?required?
 {
-	this->filter = ownerFilter;
+	//this->filter = ownerFilter;
 
     // set our component's initial size
     //setSize (20,20);
@@ -48,7 +51,9 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
     // class to tell us when something has changed, and this will call our changeListenerCallback()
     // method.
 
-    filter->addChangeListener (this);
+    //filter->addChangeListener (this);
+
+	
 
 	
 	
@@ -59,9 +64,19 @@ AdsrWidget::AdsrWidget (RedverbEngine* const ownerFilter)
 
 AdsrWidget::~AdsrWidget()
 {
-    filter->removeChangeListener (this);
+    //filter->removeChangeListener (this);
 
     deleteAllChildren();//warning with the adsrHandleWidget
+
+	/*AdsrHandleSetType::iterator it;
+
+
+	for (it = adsrHandleSet.begin() ; it != adsrHandleSet.end(); it++){
+	
+		delete *it;
+		}
+		*/
+
 }
 
 //==============================================================================
@@ -120,6 +135,15 @@ void AdsrWidget::setBaseADSR(){
 
 
 
+std::vector<std::pair<float,float>> AdsrWidget::getValues(){
+	std::vector<std::pair<float,float>> temp;
+
+	return temp;
+
+}
+
+
+
 void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x, int y, const MouseEvent& e){
 	//remember, the goal of the method is to determine whether the handle can move where it is asked or not.
 	//causes that might block the handle :
@@ -127,7 +151,8 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 		// going after the next handle or before the previous one.
 		// for the first, going before the time origine
 		// for the last, goind after the end of the impulse.
-	bool shouldMove = true;
+
+
 
 	
 	if(y < 5){ //5 pixels far from the top edge of the widget
@@ -198,13 +223,20 @@ void AdsrWidget::RemoveHandle(AdsrHandleWidget* adsrHandlePtr){
 //==============================================================================
 
 void AdsrWidget::mouseDoubleClick (const MouseEvent& e){
-	AdsrHandleWidget* temp = new AdsrHandleWidget(this, e.getPosition().getX(), e.getPosition().getY(), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL);
-	
-	AdsrHandleSetType::iterator it = (adsrHandleSet.insert(temp)).first;
-	addAndMakeVisible (*it);
-	
 
-	repaint();
+	if(e.getPosition().getX() <= (*(adsrHandleSet.begin()))->getX()){
+		//refuse to add that point
+	}else if(e.getPosition().getX() >= (*(adsrHandleSet.rbegin()))->getX()){
+		//refuse to add that point
+	}else{
+		AdsrHandleWidget* temp = new AdsrHandleWidget(this, e.getPosition().getX(), e.getPosition().getY(), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL);
+		
+		AdsrHandleSetType::iterator it = (adsrHandleSet.insert(temp)).first;
+		addAndMakeVisible (*it);
+		
+
+		repaint();
+	}
 	
 }
 
@@ -212,9 +244,10 @@ void AdsrWidget::mouseDoubleClick (const MouseEvent& e){
 
 void AdsrWidget::changeListenerCallback (void* source)
 {
-    // this is the filter telling us that it's changed, so we'll update our
-    // display of the time, midi message, etc.
-    updateParametersFromFilter();
+    //we received a change message from one of the handles!
+	//send a change message to the GUI
+	sendChangeMessage(this);
+
 }
 
 
@@ -246,7 +279,7 @@ void AdsrWidget::updateParametersFromFilter()
 
 
 int AdsrWidget::GainToPixel( float gain ){
-	return (int) (getHeight() - 5 -   gain/1.25f * ( getHeight() - 10));
+	return (int) (getHeight() - 5 -  gain/ MAXGAIN * ( getHeight() - 10));
 	//return (int) getHeight() - gain/maxGain * ( getHeight() - 10);
 	//return 30;
 	//return  getHeight() - 5;
@@ -254,7 +287,10 @@ int AdsrWidget::GainToPixel( float gain ){
 
 	
 float AdsrWidget::PixelToGain( int pixel ){
-	return 0;//todo : do it;
+	if(pixel >=5 && pixel<= getHeight() - 5)
+		return (float) (MAXGAIN * (getHeight() - 5 - pixel) / (getHeight() - 10));
+	else
+		return -1;//error
 }
 
 	
@@ -266,5 +302,8 @@ int AdsrWidget::TimeToPixel( float time ){
 
 	
 float AdsrWidget::PixelToTime( int pixel ){
-	return 0; //todo : do it;
+	if(pixel >=5 && pixel<= getWidth() - 5)
+		return 5.0f * (pixel - 5) / (getWidth() - 10);
+	else
+		return -1;//error
 }
