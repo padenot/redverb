@@ -64,8 +64,15 @@ public:
 	 */
 	void setBaseADSR();
 
-	
+	/**
+	 * @brief sets the raw impulse for preview
+	 */
+	void setRawImpulse(int sizeInSamples = 0 ,float** data = 0);
 
+	
+	/**
+	 * @brief gets the pairs of values of our handles
+	 */
 	std::vector<std::pair<float,float>> getValues();
 
 
@@ -144,10 +151,44 @@ private:
 	 */
     void updateParametersFromFilter();
 
+
+
+	/**
+     * @brief recomputes the ImpulsePreview with the envelope
+	 */
+    void recomputeModulation();/*think about adding a paramteter to lower computation needs. */
+
+
+	/**
+     * @brief draw the untouched Impulse
+	 */
+    void drawRawImpulse(Graphics& g);
+
+	/**
+     * @brief draw the modulated Impulse
+	 */
+    void drawModulatedImpulse(Graphics& g);
+
+
+
+
+
+
 	/**
 	 * @brief A pointeur to the filtre itself
 	 */
 	RedverbEngine* filter;
+
+	/**
+	 * @brief A int array for the raw Impulse
+	 */
+	float* rawImpulse;
+
+	/**
+	 * @brief A int array for the envelope-modulated Impulse
+	 */
+	float* modulatedImpulse;
+
 
 
 	/**

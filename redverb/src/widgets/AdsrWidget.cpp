@@ -20,6 +20,10 @@
 #include <set>
 #include <vector>
 
+#include <math.h>
+
+#define PI 3.14159265
+
 #define max(a,b) (((a)>(b)?(a):(b) ))
 #define min(a,b) (((a)<(b)?(a):(b) ))
 
@@ -53,6 +57,9 @@ AdsrWidget::AdsrWidget (Component* theParent):parent(theParent)
 
     //filter->addChangeListener (this);
 
+	rawImpulse = 0;
+	modulatedImpulse = 0;
+
 	
 
 	
@@ -76,6 +83,9 @@ AdsrWidget::~AdsrWidget()
 		delete *it;
 		}
 		*/
+
+	delete[] rawImpulse;
+	delete[] modulatedImpulse;
 
 }
 
@@ -106,6 +116,11 @@ void AdsrWidget::paint (Graphics& g)
 		
 	
 	}
+
+	if(rawImpulse){
+		drawRawImpulse(g);
+		drawModulatedImpulse(g);
+	}
 	
 
 }
@@ -118,13 +133,68 @@ void AdsrWidget::resized()
 
 
 
+
+void AdsrWidget::setRawImpulse(int sizeInSamples ,float** data){
+	//copy only values interesting for display stuff
+
+	if(sizeInSamples == 0) { //default case! set default values for testing purpose
+		sizeInSamples = 4096;
+		data = new float*[2];
+		data[0] = new float[4096];
+		data[1] = new float[4096];
+		for(int i = 0; i<sizeInSamples;i++){
+			data[0][i] = sin (2*PI*i/(sizeInSamples/4));
+			data[1][i] = sin (2*PI*i/(sizeInSamples/4));
+		}
+	}
+
+
+	if( !rawImpulse ){//already have an impulse loaded, forget it
+		delete[] rawImpulse;
+		delete[] modulatedImpulse;
+	}
+
+	int size = getWidth()-10;
+	int ratio = sizeInSamples / size ;
+
+	rawImpulse = new float[size] ;
+	modulatedImpulse = new float[size] ;
+	
+	for (int i = 0; i < size; i++){
+		rawImpulse[i] = 0;
+		for (int j = 0; j < ratio ; j++){
+			if (  data[0][i*ratio+j] > 0)
+				rawImpulse[i] = max ( rawImpulse[i] , data[0][i*ratio+j] );
+			else
+				rawImpulse[i] = max ( rawImpulse[i] , -data[0][i*ratio+j] );
+
+			if (  data[1][i*ratio+j] > 0)
+				rawImpulse[i] = max ( rawImpulse[i] , data[1][i*ratio+j] );
+			else
+				rawImpulse[i] = max ( rawImpulse[i] , -data[1][i*ratio+j] );
+		}
+
+		modulatedImpulse[i] = rawImpulse[i];
+	}
+
+		
+	setBaseADSR();
+	
+
+
+
+}
+
+
+
+
+
 void AdsrWidget::setBaseADSR(){
 
 	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(0), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(1), GainToPixel(1.25f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(2), GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(3), GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
-	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(4), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, 7, GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, getWidth()-7, GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
+	adsrHandleSet.insert(new AdsrHandleWidget(this, getWidth()-5, GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
 
 	AdsrHandleSetType::iterator it;
 	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
@@ -192,6 +262,8 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 
 		x = max((*previous)->getX() +5,min( (*next)->getX() - 5 , x)) ;
 
+		
+
 
 		
 
@@ -201,6 +273,9 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 	
 		 //adsrHandlePtr->getDragger().dragComponent (adsrHandlePtr, e);
 		 adsrHandlePtr->setBounds(x,y,adsrHandlePtr->getWidth(),adsrHandlePtr->getHeight());
+
+		
+		 
 	
 }
 
@@ -247,6 +322,8 @@ void AdsrWidget::changeListenerCallback (void* source)
     //we received a change message from one of the handles!
 	//send a change message to the GUI
 	sendChangeMessage(this);
+	recomputeModulation();
+	//repaint();
 
 }
 
@@ -272,6 +349,30 @@ void AdsrWidget::updateParametersFromFilter()
     // ..release the lock ASAP
     filter->getCallbackLock().exit();
 
+
+}
+
+
+
+void AdsrWidget::recomputeModulation(){
+	//need to compute the values of the modulatedImpulse.
+
+	int i = 5;
+	AdsrHandleSetType::iterator it = adsrHandleSet.begin();
+
+	for(;i<=(*it)->getCenterX();i++){
+		modulatedImpulse[i-5] = 0;
+	}
+	//do it
+
+
+	for(int j = (*(adsrHandleSet.rbegin()))->getCenterX() ;j<getWidth()-5;j++){
+		modulatedImpulse[j-5] = 0;
+	}
+	
+
+	repaint();
+	
 
 }
 
@@ -306,4 +407,20 @@ float AdsrWidget::PixelToTime( int pixel ){
 		return 5.0f * (pixel - 5) / (getWidth() - 10);
 	else
 		return -1;//error
+}
+
+
+
+void AdsrWidget::drawRawImpulse(Graphics& g){
+	g.setColour(Colours::red.withAlpha(0.5f));
+	for(int i = 0; i < getWidth() -10; i++)
+		g.drawVerticalLine(i +5, GainToPixel(rawImpulse[i]) , GainToPixel(0));
+}
+
+
+void AdsrWidget::drawModulatedImpulse(Graphics& g){
+	g.setColour(Colours::black.withAlpha(0.5f));
+	for(int i = 0; i < getWidth() -10; i++)
+		g.drawVerticalLine(i +5, GainToPixel(modulatedImpulse[i]) , GainToPixel(0));
+
 }

@@ -22,7 +22,7 @@
 
 
 
-enum ImpulseParameters
+enum ImpulseParameters /// Deprecated ! see how to obtain parameters from ADSR widgets.
 {
 	pStart,
 	pEnd,
