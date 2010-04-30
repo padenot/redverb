@@ -14,7 +14,7 @@
    height="350"
    id="svg2"
    version="1.1"
-   inkscape:version="0.47pre4 r22446"
+   inkscape:version="0.47pre3 "
    sodipodi:docname="vstUiredverb5.svg"
    inkscape:export-filename="/home/nico/INSA/TP/filrouge/design/fond2.png"
    inkscape:export-xdpi="90"
@@ -22,6 +22,18 @@
    style="display:inline">
   <defs
      id="defs4">
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient7326">
+      <stop
+         style="stop-color:#165065;stop-opacity:1;"
+         offset="0"
+         id="stop7328" />
+      <stop
+         style="stop-color:#71bbd6;stop-opacity:1"
+         offset="1"
+         id="stop7330" />
+    </linearGradient>
     <linearGradient
        inkscape:collect="always"
        id="linearGradient5393">
@@ -1596,28 +1608,6 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter4523-6">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="0.53783504"
-         id="feGaussianBlur4525-2" />
-    </filter>
-    <filter
-       color-interpolation-filters="sRGB"
-       inkscape:collect="always"
-       id="filter6163-4-1"
-       x="-0.45324183"
-       width="1.9064837"
-       y="-0.17259149"
-       height="1.345183">
-      <feGaussianBlur
-         inkscape:collect="always"
-         stdDeviation="1.3068937"
-         id="feGaussianBlur6165-9-3" />
-    </filter>
     <inkscape:perspective
        id="perspective6707"
        inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
@@ -1655,7 +1645,8 @@
        sodipodi:type="inkscape:persp3d" />
     <filter
        inkscape:collect="always"
-       id="filter7373">
+       id="filter7373"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="1.3523417"
@@ -1663,7 +1654,8 @@
     </filter>
     <filter
        inkscape:collect="always"
-       id="filter7387">
+       id="filter7387"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="0.080858395"
@@ -1671,7 +1663,8 @@
     </filter>
     <filter
        inkscape:collect="always"
-       id="filter7393">
+       id="filter7393"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="0.23006754"
@@ -1693,7 +1686,7 @@
        id="linearGradient7429"
        x1="297.2157"
        y1="25.703152"
-       x2="352.18562"
+       x2="352.18561"
        y2="25.703152"
        gradientUnits="userSpaceOnUse"
        gradientTransform="translate(6,0)" />
@@ -1703,7 +1696,7 @@
        id="linearGradient7451"
        x1="289.06863"
        y1="25.703152"
-       x2="360.77062"
+       x2="360.77063"
        y2="25.703152"
        gradientUnits="userSpaceOnUse" />
     <inkscape:perspective
@@ -2215,7 +2208,8 @@
        x="-0.10800001"
        width="1.216"
        y="-0.053999998"
-       height="1.108">
+       height="1.108"
+       color-interpolation-filters="sRGB">
       <feGaussianBlur
          inkscape:collect="always"
          stdDeviation="3.6000003"
@@ -2326,6 +2320,75 @@
        inkscape:vp_y="0 : 1000 : 0"
        inkscape:vp_x="0 : 0.5 : 1"
        sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       inkscape:collect="always"
+       xlink:href="#linearGradient7326"
+       id="linearGradient7332"
+       x1="417.5"
+       y1="48.5"
+       x2="417.5"
+       y2="34.5"
+       gradientUnits="userSpaceOnUse" />
+    <filter
+       inkscape:collect="always"
+       id="filter7360"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.49"
+         id="feGaussianBlur7362" />
+    </filter>
+    <filter
+       inkscape:collect="always"
+       id="filter7540"
+       x="-0.63050681"
+       width="2.2610135"
+       y="-0.044997416"
+       height="1.0899948"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.26326911"
+         id="feGaussianBlur7542" />
+    </filter>
+    <inkscape:perspective
+       id="perspective8246"
+       inkscape:persp3d-origin="0.5 : 0.33333333 : 1"
+       inkscape:vp_z="1 : 0.5 : 1"
+       inkscape:vp_y="0 : 1000 : 0"
+       inkscape:vp_x="0 : 0.5 : 1"
+       sodipodi:type="inkscape:persp3d" />
+    <linearGradient
+       gradientTransform="translate(1.20267,701.66396)"
+       inkscape:collect="always"
+       xlink:href="#linearGradient7326-5"
+       id="linearGradient7332-3"
+       x1="417.5"
+       y1="48.5"
+       x2="417.5"
+       y2="34.5"
+       gradientUnits="userSpaceOnUse" />
+    <linearGradient
+       inkscape:collect="always"
+       id="linearGradient7326-5">
+      <stop
+         style="stop-color:#165065;stop-opacity:1;"
+         offset="0"
+         id="stop7328-7" />
+      <stop
+         style="stop-color:#71bbd6;stop-opacity:1"
+         offset="1"
+         id="stop7330-6" />
+    </linearGradient>
+    <filter
+       inkscape:collect="always"
+       id="filter7360-6"
+       color-interpolation-filters="sRGB">
+      <feGaussianBlur
+         inkscape:collect="always"
+         stdDeviation="0.49"
+         id="feGaussianBlur7362-5" />
+    </filter>
   </defs>
   <sodipodi:namedview
      id="base"
@@ -2334,16 +2397,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="1"
-     inkscape:cx="298.61404"
-     inkscape:cy="157.38365"
+     inkscape:zoom="2"
+     inkscape:cx="281.71704"
+     inkscape:cy="265.52915"
      inkscape:document-units="px"
      inkscape:current-layer="layer3"
      showgrid="true"
      inkscape:window-width="1280"
-     inkscape:window-height="751"
-     inkscape:window-x="0"
-     inkscape:window-y="24"
+     inkscape:window-height="748"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
      inkscape:window-maximized="1"
      showguides="true"
      inkscape:guide-bbox="true"
@@ -2366,7 +2429,7 @@
         <dc:format>image/svg+xml</dc:format>
         <dc:type
            rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
-        <dc:title></dc:title>
+        <dc:title />
       </cc:Work>
     </rdf:RDF>
   </metadata>
@@ -2566,18 +2629,14 @@
        id="path4920"
        transform="translate(0,702.36218)" />
     <path
-       style="fill:#aa0000;stroke:#b70000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 430,35 0,13"
-       id="path4959"
-       transform="translate(0,702.36218)" />
+       style="font-size:medium;font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;text-indent:0;text-align:start;text-decoration:none;line-height:normal;letter-spacing:normal;word-spacing:normal;text-transform:none;direction:ltr;block-progression:tb;writing-mode:lr-tb;text-anchor:start;opacity:0.8;color:#000000;fill:#000000;fill-opacity:1;fill-rule:nonzero;stroke:none;stroke-width:1px;marker:none;visibility:visible;display:inline;overflow:visible;filter:url(#filter7540);enable-background:accumulate;font-family:Bitstream Vera Sans;-inkscape-font-specification:Bitstream Vera Sans"
+       d="m 434.5625,737.4375 c -0.25109,0.031 -0.4552,0.27887 -0.4375,0.53125 l 0,13 c -0.004,0.26416 0.23582,0.50712 0.5,0.50712 0.26418,0 0.50374,-0.24296 0.5,-0.50712 l 0,-13 c 0.0208,-0.29415 -0.27002,-0.56881 -0.5625,-0.53125 z"
+       id="path7518"
+       sodipodi:nodetypes="cccsccc" />
     <path
-       style="fill:none;stroke:#a70000;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 437,741.36218 5,8 5,-8 -1,-2 -4,6 -4,-6 -1,2 z"
-       id="path4961" />
-    <path
-       id="path4963"
-       d="m 455,737.36218 0,13"
-       style="fill:#aa0000;stroke:#b70000;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1" />
+       style="fill:#aa0000;stroke:#284a67;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
+       d="m 434,737.36218 0,13"
+       id="path4959" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2945,12 +3004,6 @@
          d="m 113.92857,437.18362 a 24.821428,24.821428 0 1 1 -49.642859,0 24.821428,24.821428 0 1 1 49.642859,0 z"
          transform="matrix(0.75364475,0,0,0.75364475,167.83205,451.94472)" />
     </g>
-    <path
-       style="fill:none;stroke:#ce0505;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1"
-       d="m 412,45 0,-6 1,-1 11,0 c 1,0 1,0 1,1 l 0,8 -1,1 -13,0 -1,-1 0,-10 2,-2 5.9443,0 1.0557,1 3,0 0,2"
-       id="path4955"
-       transform="translate(0,702.36218)"
-       sodipodi:nodetypes="ccccccccccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
@@ -2971,12 +3024,12 @@
        xml:space="preserve"
        style="font-size:14px;font-style:normal;font-weight:normal;fill:#000000;fill-opacity:1;stroke:none;display:inline;font-family:Bitstream Vera Sans"
        x="12.642136"
-       y="1042.9062"
+       y="1042.9063"
        id="text4535"><tspan
          sodipodi:role="line"
          id="tspan4537"
          x="12.642136"
-         y="1042.9062"
+         y="1042.9063"
          style="font-size:12px;fill:#cccccc">attack : 25%</tspan></text>
     <rect
        y="949.34259"
@@ -3030,6 +3083,16 @@
          id="tspan4967"
          x="468"
          y="748.36218">impulse.wav</tspan></text>
+    <path
+       sodipodi:nodetypes="ccccccccccccccc"
+       id="path7334"
+       d="m 415,748.36218 0,-6 1,-1 11,0 c 1,0 1,0 1,1 l 0,8 -1,1 -13,0 -1,-1 0,-10 2,-2 5.9443,0 1.0557,1 3,0 0,2"
+       style="opacity:0.6;fill:#000000;fill-opacity:1;stroke:none;display:inline;filter:url(#filter7360-6)" />
+    <path
+       style="fill:url(#linearGradient7332-3);fill-opacity:1;stroke:#101b2c;stroke-width:1px;stroke-linecap:round;stroke-linejoin:miter;stroke-opacity:1;display:inline"
+       d="m 413.20267,746.66396 0,-6 1,-1 11,0 c 1,0 1,0 1,1 l 0,8 -1,1 -13,0 -1,-1 0,-10 2,-2 5.9443,0 1.0557,1 3,0 0,2"
+       id="path4955"
+       sodipodi:nodetypes="ccccccccccccccc" />
   </g>
   <g
      inkscape:groupmode="layer"
