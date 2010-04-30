@@ -27,8 +27,6 @@
 #define max(a,b) (((a)>(b)?(a):(b) ))
 #define min(a,b) (((a)<(b)?(a):(b) ))
 
-#define MAXGAIN 1.25
-
 
 
 
@@ -59,14 +57,6 @@ AdsrWidget::AdsrWidget (Component* theParent):parent(theParent)
 
 	rawImpulse = 0;
 	modulatedImpulse = 0;
-
-	
-
-	
-	
-	
-
-
 }
 
 AdsrWidget::~AdsrWidget()
@@ -86,7 +76,6 @@ AdsrWidget::~AdsrWidget()
 
 	delete[] rawImpulse;
 	delete[] modulatedImpulse;
-
 }
 
 //==============================================================================
@@ -117,11 +106,8 @@ void AdsrWidget::paint (Graphics& g)
 	
 	}
 
-	if(rawImpulse){
-		drawRawImpulse(g);
-		drawModulatedImpulse(g);
-	}
-	
+
+
 
 }
 
@@ -176,13 +162,7 @@ void AdsrWidget::setRawImpulse(int sizeInSamples ,float** data){
 
 		modulatedImpulse[i] = rawImpulse[i];
 	}
-
-		
 	setBaseADSR();
-	
-
-
-
 }
 
 
@@ -205,11 +185,9 @@ void AdsrWidget::setBaseADSR(){
 
 
 
-std::vector<std::pair<float,float>> AdsrWidget::getValues(){
-	std::vector<std::pair<float,float>> temp;
-
+std::vector<std::pair<float,float> > AdsrWidget::getValues(){
+	std::vector<std::pair<float,float> > temp;
 	return temp;
-
 }
 
 
@@ -222,9 +200,6 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 		// for the first, going before the time origine
 		// for the last, goind after the end of the impulse.
 
-
-
-	
 	if(y < 5){ //5 pixels far from the top edge of the widget
 		y = 5;
 	}
@@ -244,8 +219,8 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 		AdsrHandleSetType::reverse_iterator next = adsrHandleSet.rbegin();
 		next ++;
 		x = max((*next)->getX() +5,min( getWidth() - 5 , x)) ;
-		
-	}else{//any other handle
+
+	} else{//any other handle
 		AdsrHandleSetType::iterator previous;
 		AdsrHandleSetType::iterator self;
 		AdsrHandleSetType::iterator next;
@@ -259,24 +234,10 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 				next++;
 			}
 		}
-
 		x = max((*previous)->getX() +5,min( (*next)->getX() - 5 , x)) ;
-
-		
-
-
-		
-
 	}
-
-
-	
-		 //adsrHandlePtr->getDragger().dragComponent (adsrHandlePtr, e);
-		 adsrHandlePtr->setBounds(x,y,adsrHandlePtr->getWidth(),adsrHandlePtr->getHeight());
-
-		
-		 
-	
+	//adsrHandlePtr->getDragger().dragComponent (adsrHandlePtr, e);
+	adsrHandlePtr->setBounds(x,y,adsrHandlePtr->getWidth(),adsrHandlePtr->getHeight());
 }
 
 
@@ -292,7 +253,6 @@ void AdsrWidget::RemoveHandle(AdsrHandleWidget* adsrHandlePtr){
 		delete adsrHandlePtr;
 		repaint();
 	}
-
 }
 
 //==============================================================================
@@ -309,10 +269,8 @@ void AdsrWidget::mouseDoubleClick (const MouseEvent& e){
 		AdsrHandleSetType::iterator it = (adsrHandleSet.insert(temp)).first;
 		addAndMakeVisible (*it);
 		
-
 		repaint();
 	}
-	
 }
 
 
@@ -324,7 +282,6 @@ void AdsrWidget::changeListenerCallback (void* source)
 	sendChangeMessage(this);
 	recomputeModulation();
 	//repaint();
-
 }
 
 
@@ -363,58 +320,28 @@ void AdsrWidget::recomputeModulation(){
 	for(;i<=(*it)->getCenterX();i++){
 		modulatedImpulse[i-5] = 0;
 	}
+
 	//do it
 
 
 	for(int j = (*(adsrHandleSet.rbegin()))->getCenterX() ;j<getWidth()-5;j++){
 		modulatedImpulse[j-5] = 0;
 	}
-	
-
 	repaint();
-	
-
 }
 
 
 
 
-int AdsrWidget::GainToPixel( float gain ){
-	return (int) (getHeight() - 5 -  gain/ MAXGAIN * ( getHeight() - 10));
-	//return (int) getHeight() - gain/maxGain * ( getHeight() - 10);
-	//return 30;
-	//return  getHeight() - 5;
-}
-
-	
-float AdsrWidget::PixelToGain( int pixel ){
-	if(pixel >=5 && pixel<= getHeight() - 5)
-		return (float) (MAXGAIN * (getHeight() - 5 - pixel) / (getHeight() - 10));
-	else
-		return -1;//error
-}
-
-	
-int AdsrWidget::TimeToPixel( float time ){
-	//return 5 + time/impulseLength * (getWidth() -10 ) ;
-	return (int) (5 +  time/5.0f * (getWidth() -10 ) );
-	return 30;
-}
-
-	
-float AdsrWidget::PixelToTime( int pixel ){
-	if(pixel >=5 && pixel<= getWidth() - 5)
-		return 5.0f * (pixel - 5) / (getWidth() - 10);
-	else
-		return -1;//error
-}
+// Gain2pixel and al have been inlined.
 
 
 
+// We need to undersample the value, this is too CPU intesive.
 void AdsrWidget::drawRawImpulse(Graphics& g){
 	g.setColour(Colours::red.withAlpha(0.5f));
 	for(int i = 0; i < getWidth() -10; i++)
-		g.drawVerticalLine(i +5, GainToPixel(rawImpulse[i]) , GainToPixel(0));
+		g.drawVerticalLine(i + 5, GainToPixel(rawImpulse[i]) , GainToPixel(0));
 }
 
 
@@ -422,5 +349,4 @@ void AdsrWidget::drawModulatedImpulse(Graphics& g){
 	g.setColour(Colours::black.withAlpha(0.5f));
 	for(int i = 0; i < getWidth() -10; i++)
 		g.drawVerticalLine(i +5, GainToPixel(modulatedImpulse[i]) , GainToPixel(0));
-
 }

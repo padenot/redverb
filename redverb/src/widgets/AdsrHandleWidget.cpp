@@ -25,10 +25,8 @@
 AdsrHandleWidget::AdsrHandleWidget (AdsrWidget* theParent,int x, int y, int moves)
 :parent(theParent),moveLiberty(moves)
 {
-	
   setBounds(x-5,y-5,10,10);
-  addChangeListener(parent);
-   
+  addChangeListener(parent); 
 }
 
 AdsrHandleWidget::AdsrHandleWidget (const AdsrHandleWidget& other)

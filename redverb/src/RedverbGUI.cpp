@@ -112,6 +112,7 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     // class to tell us when something has changed, and this will call our changeListenerCallback()
     // method.
     ownerFilter->addChangeListener (this);
+	background = ImageFileFormat::loadFrom(File("c:/fond.png"));
 }
 
 RedverbGUI::~RedverbGUI()
@@ -128,11 +129,10 @@ void RedverbGUI::paint (Graphics& g)
     //g.fillAll (Colour::greyLevel (0.9f));
 
 	// blit the background
-	g.drawImageAt(ImageFileFormat::loadFrom(File("c:/fond.png")),0,0);
+	g.drawImageAt(background,0,0);
 	//prefere to load from an input stream, and add the image directly in binary code.
 	//prevents loading time
 	//g.drawImageAt(ImageFileFormat::loadFrom(THE_INPUT_STREAM)),0,0);
-
 }
 
 void RedverbGUI::resized()

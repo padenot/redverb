@@ -74,6 +74,10 @@ private:
 	 */
 	Label* infoLabel;
 
+	/**
+	 * @brief The background image.
+	 */
+	Image* background;
 	
 	/**
 	 * @brief Slider for the feedback.

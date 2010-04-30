@@ -32,11 +32,6 @@ class AdsrHandleWidget   : public Component, public ChangeBroadcaster
                               
 {
 public:
-
-
-
-
-
 	/** 
 	 * @brief Flag definition for the allowed movements
 	 */

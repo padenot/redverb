@@ -25,6 +25,8 @@ class AdsrHandleWidget ;//WTF?!
 #include "AdsrHandleWidget.h"
 
 
+const float MAXGAIN = 1.25f;
+
 /**
  * @brief widget managing ADSR manipulations.
  *
@@ -52,6 +54,7 @@ public:
 	 * @brief Called when the user wants to add an handle.
 	 */
 	void mouseDoubleClick (const MouseEvent& e);
+
 
 	/**
 	 * @brief Called when parameter change occur.
@@ -97,25 +100,35 @@ public:
 	 */
     void RemoveHandle(AdsrHandleWidget* adsrHandlePtr);
 
-	/**
-	 * @brief Obtain the gain represented by pixel's y coordonate
-	 */
-	int GainToPixel( float gain );
+int AdsrWidget::GainToPixel( float gain ){
+	return (int) (getHeight() - 5 -  gain/ MAXGAIN * ( getHeight() - 10));
+	//return (int) getHeight() - gain/maxGain * ( getHeight() - 10);
+	//return 30;
+	//return  getHeight() - 5;
+}
 
-	/**
-	 * @brief obtain the pixel's y coordonate at the choosen gain
-	 */
-	float PixelToGain( int pixel );
+	
+inline float AdsrWidget::PixelToGain( int pixel ){
+	if(pixel >=5 && pixel<= getHeight() - 5)
+		return (float) (MAXGAIN * (getHeight() - 5 - pixel) / (getHeight() - 10));
+	else
+		return -1;//error
+}
 
-		/**
-	 * @brief Obtain the time represented by pixel's x coordonate
-	 */
-	int TimeToPixel( float time );
+	
+inline int AdsrWidget::TimeToPixel( float time ){
+	//return 5 + time/impulseLength * (getWidth() -10 ) ;
+	return (int) (5 +  time/5.0f * (getWidth() -10 ) );
+	return 30;
+}
 
-	/**
-	 * @brief obtain the pixel's x coordonate at the choosen time
-	 */
-	float PixelToTime( int pixel );
+	
+inline float AdsrWidget::PixelToTime( int pixel ){
+	if(pixel >=5 && pixel<= getWidth() - 5)
+		return 5.0f * (pixel - 5) / (getWidth() - 10);
+	else
+		return -1;//error
+}
 
 
 
@@ -173,6 +186,10 @@ private:
 
 
 
+	/**
+	 * @brief This is true 
+	 */
+    bool impulseDataNeedsRedrawing;
 
 	/**
 	 * @brief A pointeur to the filtre itself

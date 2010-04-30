@@ -12,12 +12,16 @@ Impulse::Impulse(String path)
 	AudioFormatReader* audioFormatReader = audioFormat.createReaderFor(stream, false);
 	internalBufferOriginal = new AudioSampleBuffer(audioFormatReader->numChannels,audioFormatReader->lengthInSamples ); // FIXME
 	internalBuffer = new AudioSampleBuffer(*internalBufferOriginal);
-	internalBuffer = new AudioSampleBuffer(*internalBufferOriginal);
+//	internalBuffer = new AudioSampleBuffer(*internalBufferOriginal);
+	delete stream;
+	delete audioFormatReader;
 }
 
 Impulse::~Impulse(void)
 {
 	delete internalBuffer;
+	delete internalBufferOriginal;
+	delete internalBufferBackup;
 }
 
 
