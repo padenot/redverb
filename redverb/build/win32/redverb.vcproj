@@ -240,6 +240,14 @@
 					RelativePath="..\..\src\RedverbLookAndFeel.h"
 					>
 				</File>
+				<File
+					RelativePath="..\..\src\Ressources\ressources.cpp"
+					>
+				</File>
+				<File
+					RelativePath="..\..\src\Ressources\ressources.h"
+					>
+				</File>
 				<Filter
 					Name="widgets"
 					>

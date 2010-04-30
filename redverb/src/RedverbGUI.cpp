@@ -18,6 +18,7 @@
 #include "includes.h"
 #include "redverbGUI.h"
 #include "widgets/AdsrWidget.h"
+#include "Ressources/ressources.h"
 
 #define Pi 3.14159265358979323846 
 
@@ -95,11 +96,6 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
 	adsrWid->addChangeListener(this);
 
 
-
-
-
-
-
     // add the triangular resizer component for the bottom-right of the UI
     addAndMakeVisible (resizer = new ResizableCornerComponent (this, &resizeLimits));
     resizeLimits.setSizeLimits (150, 150, 800, 300);
@@ -112,7 +108,11 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     // class to tell us when something has changed, and this will call our changeListenerCallback()
     // method.
     ownerFilter->addChangeListener (this);
-	background = ImageFileFormat::loadFrom(File("c:/fond.png"));
+	background = ImageFileFormat::loadFrom(Ressources::fond2_png, Ressources::fond2_pngSize);
+
+//	addAndMakeVisible (fileChooserButton = new DrawableButton(T("FileChooserButton"), DrawableButton::ImageRaw));
+//	fileChooserButton->addComponentListener(this);
+//	fileChooserButton->setImages(Ressources::loadimpulsenormal_png, Ressources::loadimpulseover_png, Ressources::loadimpulsedown_png);
 }
 
 RedverbGUI::~RedverbGUI()
@@ -149,6 +149,8 @@ void RedverbGUI::resized()
 	feedbackSlider->setBounds(10, 40, 200, 22);
 
 	delaySlider->setBounds(10, 75, 200, 22);
+
+	//fileChooserButton->setBounds(400, 70, 10, 10);
 
 	/*
 	leftDryVolume->setBounds(535, 173, 5, 115);
