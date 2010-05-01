@@ -267,6 +267,14 @@
 						RelativePath="..\..\src\widgets\AdsrWidget.h"
 						>
 					</File>
+					<File
+						RelativePath=".\WaveFormDisplayWidget.cpp"
+						>
+					</File>
+					<File
+						RelativePath=".\WaveFormDisplayWidget.h"
+						>
+					</File>
 				</Filter>
 			</Filter>
 			<Filter

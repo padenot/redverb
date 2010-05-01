@@ -162,8 +162,8 @@ void RedverbGUI::resized()
 	wetSlider->setBounds(575, 173, 10, 115);
 
 	adsrWid->setBounds(10,90,495,225);//this dimension correspond to the display zone.
-	//adsrWid->setBaseADSR();
-	adsrWid->setRawImpulse();
+	adsrWid->setBaseADSR();
+
 
     // if we've been resized, tell the filter so that it can store the new size
     // in its settings

@@ -23,9 +23,10 @@ class AdsrHandleWidget ;//WTF?!
 #include "redverbEngine.h"
 //#include "RedverbLookAndFeel.h"
 #include "AdsrHandleWidget.h"
+#include "WaveFormDisplayWidget.h"
 
 
-const float MAXGAIN = 1.25f;
+//const float MAXGAIN = 1.25f;
 
 /**
  * @brief widget managing ADSR manipulations.
@@ -70,7 +71,7 @@ public:
 	/**
 	 * @brief sets the raw impulse for preview
 	 */
-	void setRawImpulse(int sizeInSamples = 0 ,float** data = 0);
+	//void setRawImpulse(int sizeInSamples = 0 ,float** data = 0);
 
 	
 	/**
@@ -100,7 +101,7 @@ public:
 	 */
     void RemoveHandle(AdsrHandleWidget* adsrHandlePtr);
 
-int AdsrWidget::GainToPixel( float gain ){
+inline int AdsrWidget::GainToPixel( float gain ){
 	return (int) (getHeight() - 5 -  gain/ MAXGAIN * ( getHeight() - 10));
 	//return (int) getHeight() - gain/maxGain * ( getHeight() - 10);
 	//return 30;
@@ -169,18 +170,18 @@ private:
 	/**
      * @brief recomputes the ImpulsePreview with the envelope
 	 */
-    void recomputeModulation();/*think about adding a paramteter to lower computation needs. */
+    //void recomputeModulation();/*think about adding a paramteter to lower computation needs. */
 
 
 	/**
      * @brief draw the untouched Impulse
 	 */
-    void drawRawImpulse(Graphics& g);
+    //void drawRawImpulse(Graphics& g);
 
 	/**
      * @brief draw the modulated Impulse
 	 */
-    void drawModulatedImpulse(Graphics& g);
+    //void drawModulatedImpulse(Graphics& g);
 
 
 
@@ -189,7 +190,7 @@ private:
 	/**
 	 * @brief This is true 
 	 */
-    bool impulseDataNeedsRedrawing;
+    //bool impulseDataNeedsRedrawing;
 
 	/**
 	 * @brief A pointeur to the filtre itself
@@ -199,13 +200,15 @@ private:
 	/**
 	 * @brief A int array for the raw Impulse
 	 */
-	float* rawImpulse;
+	//float* rawImpulse;
+
 
 	/**
 	 * @brief A int array for the envelope-modulated Impulse
 	 */
-	float* modulatedImpulse;
-
+	//float* modulatedImpulse;
+	WaveFormDisplayWidget* huh;
+	
 
 
 	/**

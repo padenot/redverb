@@ -21,6 +21,7 @@
 #include <vector>
 
 #include <math.h>
+#include "WaveFormDisplayWidget.h"
 
 #define PI 3.14159265
 
@@ -48,34 +49,19 @@ AdsrWidget::AdsrWidget (Component* theParent):parent(theParent)
     // set our component's initial size
     //setSize (20,20);
 	setOpaque (! Desktop::canUseSemiTransparentWindows());
+	huh = 0;
 
-    // register ourselves with the filter - it will use its ChangeBroadcaster base
-    // class to tell us when something has changed, and this will call our changeListenerCallback()
-    // method.
 
-    //filter->addChangeListener (this);
-
-	rawImpulse = 0;
-	modulatedImpulse = 0;
 }
 
 AdsrWidget::~AdsrWidget()
 {
-    //filter->removeChangeListener (this);
+
 
     deleteAllChildren();//warning with the adsrHandleWidget
-
-	/*AdsrHandleSetType::iterator it;
-
-
-	for (it = adsrHandleSet.begin() ; it != adsrHandleSet.end(); it++){
 	
-		delete *it;
-		}
-		*/
 
-	delete[] rawImpulse;
-	delete[] modulatedImpulse;
+
 }
 
 //==============================================================================
@@ -120,56 +106,15 @@ void AdsrWidget::resized()
 
 
 
-void AdsrWidget::setRawImpulse(int sizeInSamples ,float** data){
-	//copy only values interesting for display stuff
-
-	if(sizeInSamples == 0) { //default case! set default values for testing purpose
-		sizeInSamples = 4096;
-		data = new float*[2];
-		data[0] = new float[4096];
-		data[1] = new float[4096];
-		for(int i = 0; i<sizeInSamples;i++){
-			data[0][i] = sin (2*PI*i/(sizeInSamples/4));
-			data[1][i] = sin (2*PI*i/(sizeInSamples/4));
-		}
-	}
-
-
-	if( !rawImpulse ){//already have an impulse loaded, forget it
-		delete[] rawImpulse;
-		delete[] modulatedImpulse;
-	}
-
-	int size = getWidth()-10;
-	int ratio = sizeInSamples / size ;
-
-	rawImpulse = new float[size] ;
-	modulatedImpulse = new float[size] ;
-	
-	for (int i = 0; i < size; i++){
-		rawImpulse[i] = 0;
-		for (int j = 0; j < ratio ; j++){
-			if (  data[0][i*ratio+j] > 0)
-				rawImpulse[i] = max ( rawImpulse[i] , data[0][i*ratio+j] );
-			else
-				rawImpulse[i] = max ( rawImpulse[i] , -data[0][i*ratio+j] );
-
-			if (  data[1][i*ratio+j] > 0)
-				rawImpulse[i] = max ( rawImpulse[i] , data[1][i*ratio+j] );
-			else
-				rawImpulse[i] = max ( rawImpulse[i] , -data[1][i*ratio+j] );
-		}
-
-		modulatedImpulse[i] = rawImpulse[i];
-	}
-	setBaseADSR();
-}
-
-
 
 
 
 void AdsrWidget::setBaseADSR(){
+
+	huh = new WaveFormDisplayWidget(this,getWidth(),getHeight(), Colours::red.withAlpha(0.2f),0,0);
+	addChildComponent(huh);
+	huh->setVisible(true);
+
 
 	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(0), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
 	adsrHandleSet.insert(new AdsrHandleWidget(this, 7, GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
@@ -179,8 +124,11 @@ void AdsrWidget::setBaseADSR(){
 	AdsrHandleSetType::iterator it;
 	for (it=adsrHandleSet.begin(); it!=adsrHandleSet.end(); it++)
 		addAndMakeVisible(*it);
-		//addAndMakeVisible (&*it);
-		//addAndMakeVisible( &(*it));
+
+
+
+		huh->SetRawWaveForm(0,0);
+
 }
 
 
@@ -280,7 +228,7 @@ void AdsrWidget::changeListenerCallback (void* source)
     //we received a change message from one of the handles!
 	//send a change message to the GUI
 	sendChangeMessage(this);
-	recomputeModulation();
+	//recomputeModulation();
 	//repaint();
 }
 
@@ -310,7 +258,7 @@ void AdsrWidget::updateParametersFromFilter()
 }
 
 
-
+/*
 void AdsrWidget::recomputeModulation(){
 	//need to compute the values of the modulatedImpulse.
 
@@ -320,8 +268,9 @@ void AdsrWidget::recomputeModulation(){
 	for(;i<=(*it)->getCenterX();i++){
 		modulatedImpulse[i-5] = 0;
 	}
-
-	//do it
+	//utiliser le code de tracage de trait entre 2 poignées pour parcourir les liens entre poignées
+	//recuperer les infos necessaires.
+	//appliquer la modulation
 
 
 	for(int j = (*(adsrHandleSet.rbegin()))->getCenterX() ;j<getWidth()-5;j++){
@@ -329,7 +278,7 @@ void AdsrWidget::recomputeModulation(){
 	}
 	repaint();
 }
-
+*/
 
 
 
@@ -337,16 +286,3 @@ void AdsrWidget::recomputeModulation(){
 
 
 
-// We need to undersample the value, this is too CPU intesive.
-void AdsrWidget::drawRawImpulse(Graphics& g){
-	g.setColour(Colours::red.withAlpha(0.5f));
-	for(int i = 0; i < getWidth() -10; i++)
-		g.drawVerticalLine(i + 5, GainToPixel(rawImpulse[i]) , GainToPixel(0));
-}
-
-
-void AdsrWidget::drawModulatedImpulse(Graphics& g){
-	g.setColour(Colours::black.withAlpha(0.5f));
-	for(int i = 0; i < getWidth() -10; i++)
-		g.drawVerticalLine(i +5, GainToPixel(modulatedImpulse[i]) , GainToPixel(0));
-}
