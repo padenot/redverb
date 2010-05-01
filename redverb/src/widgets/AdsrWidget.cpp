@@ -49,7 +49,8 @@ AdsrWidget::AdsrWidget (Component* theParent):parent(theParent)
     // set our component's initial size
     //setSize (20,20);
 	setOpaque (! Desktop::canUseSemiTransparentWindows());
-	huh = 0;
+	rawImpulseDisplayWid = 0;
+	modImpulseDisplayWid = 0;
 
 
 }
@@ -111,10 +112,16 @@ void AdsrWidget::resized()
 
 void AdsrWidget::setBaseADSR(){
 
-	huh = new WaveFormDisplayWidget(this,getWidth(),getHeight(), Colours::red.withAlpha(0.2f),0,0);
-	addChildComponent(huh);
-	huh->setVisible(true);
+	rawImpulseDisplayWid = new WaveFormDisplayWidget(this,getWidth(),getHeight(), Colours::black.withAlpha(0.5f),0,0);
+	addChildComponent(rawImpulseDisplayWid);
+	rawImpulseDisplayWid->setVisible(true);
+	rawImpulseDisplayWid->repaint();
 
+	//modImpulseDisplayWid = new WaveFormDisplayWidget(this,getWidth(),getHeight(), Colours::red.withAlpha(0.4f),0,0);
+	//modImpulseDisplayWid = new WaveFormDisplayWidget(*rawImpulseDisplayWid);
+	//addChildComponent(modImpulseDisplayWid);
+//	modImpulseDisplayWid->SetColor(Colours::red.withAlpha(0.4f));
+	//rawImpulseDisplayWid->repaint();
 
 	adsrHandleSet.insert(new AdsrHandleWidget(this, TimeToPixel(0), GainToPixel(0.0f), AdsrHandleWidget::MOVE_HORIZONTAL));
 	adsrHandleSet.insert(new AdsrHandleWidget(this, 7, GainToPixel(1.0f), AdsrHandleWidget::MOVE_HORIZONTAL|AdsrHandleWidget::MOVE_VERTICAL));
@@ -127,7 +134,8 @@ void AdsrWidget::setBaseADSR(){
 
 
 
-		huh->SetRawWaveForm(0,0);
+		rawImpulseDisplayWid->SetRawWaveForm(0,0);
+		//modImpulseDisplayWid->SetRawWaveForm(0,0);
 
 }
 
@@ -160,13 +168,13 @@ void AdsrWidget::MoveHandleHereIfPossible(AdsrHandleWidget* adsrHandlePtr, int x
 		//cannot go after the second handle
 		AdsrHandleSetType::iterator next = adsrHandleSet.begin();
 		next ++;
-		x = max(5,min( (*next)->getX() -5 , x)) ;
+		x = max(0,min( (*next)->getX() -5 , x)) ;
 
 	}else if (adsrHandlePtr == *adsrHandleSet.rbegin()){
 		//cannot go before the previous one
 		AdsrHandleSetType::reverse_iterator next = adsrHandleSet.rbegin();
 		next ++;
-		x = max((*next)->getX() +5,min( getWidth() - 5 , x)) ;
+		x = max((*next)->getX() +5,min( getWidth() - 10 , x)) ;
 
 	} else{//any other handle
 		AdsrHandleSetType::iterator previous;

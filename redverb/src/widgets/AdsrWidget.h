@@ -170,7 +170,7 @@ private:
 	/**
      * @brief recomputes the ImpulsePreview with the envelope
 	 */
-    //void recomputeModulation();/*think about adding a paramteter to lower computation needs. */
+    void recomputeModulationForPreview();/*think about adding a paramteter to lower computation needs. */
 
 
 	/**
@@ -207,7 +207,8 @@ private:
 	 * @brief A int array for the envelope-modulated Impulse
 	 */
 	//float* modulatedImpulse;
-	WaveFormDisplayWidget* huh;
+	WaveFormDisplayWidget* rawImpulseDisplayWid;
+	WaveFormDisplayWidget* modImpulseDisplayWid;
 	
 
 

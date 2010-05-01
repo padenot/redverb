@@ -130,20 +130,6 @@ private:
 	 */
     AdsrWidget* adsrWid;
 
-	/**
-	 * @brief The button to choose the impulse.
-	 * This has to be replaced by a list.
-	 */
-//	DrawableButton* fileChooserButton;
-
-	/**
-	 * @brief 
-	 */
-//	Drawable* normal;
-
-//	Drawable* mouseOver;
-
-//	Drawable* mouseDown;
 
 
 
