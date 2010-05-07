@@ -107,12 +107,26 @@ RedverbGUI::RedverbGUI (RedverbEngine* const ownerFilter)
     // register ourselves with the filter - it will use its ChangeBroadcaster base
     // class to tell us when something has changed, and this will call our changeListenerCallback()
     // method.
-    ownerFilter->addChangeListener (this);
+
+	
+	
+    
+	ownerFilter->addChangeListener (this);
 	background = ImageFileFormat::loadFrom(Ressources::fond2_png, Ressources::fond2_pngSize);
 
-//	addAndMakeVisible (fileChooserButton = new DrawableButton(T("FileChooserButton"), DrawableButton::ImageRaw));
-//	fileChooserButton->addComponentListener(this);
-//	fileChooserButton->setImages(Ressources::loadimpulsenormal_png, Ressources::loadimpulseover_png, Ressources::loadimpulsedown_png);
+	impulseChooserMouseDown = new DrawableImage();
+	impulseChooserMouseDown->setImage(ImageFileFormat::loadFrom(Ressources::loadimpulsedown_png, Ressources::loadimpulsedown_pngSize), true);
+
+	impulseChooserMouseOver = new DrawableImage();
+	impulseChooserMouseOver->setImage(ImageFileFormat::loadFrom(Ressources::loadimpulseover_png, Ressources::loadimpulseover_pngSize), true);
+	
+	impulseChooserNormal = new DrawableImage();
+	impulseChooserNormal->setImage(ImageFileFormat::loadFrom(Ressources::loadimpulsenormal_png, Ressources::loadimpulsenormal_pngSize), true);
+	
+	addAndMakeVisible (fileChooserButton = new DrawableButton(T("FileChooserButton"), DrawableButton::ImageRaw));
+	fileChooserButton->setImages(impulseChooserNormal, impulseChooserMouseOver, impulseChooserMouseDown);
+	
+
 }
 
 RedverbGUI::~RedverbGUI()
@@ -125,14 +139,8 @@ RedverbGUI::~RedverbGUI()
 //==============================================================================
 void RedverbGUI::paint (Graphics& g)
 {
-    // just clear the window
-    //g.fillAll (Colour::greyLevel (0.9f));
-
 	// blit the background
 	g.drawImageAt(background,0,0);
-	//prefere to load from an input stream, and add the image directly in binary code.
-	//prevents loading time
-	//g.drawImageAt(ImageFileFormat::loadFrom(THE_INPUT_STREAM)),0,0);
 }
 
 void RedverbGUI::resized()
@@ -150,7 +158,7 @@ void RedverbGUI::resized()
 
 	delaySlider->setBounds(10, 75, 200, 22);
 
-	//fileChooserButton->setBounds(400, 70, 10, 10);
+
 
 	/*
 	leftDryVolume->setBounds(535, 173, 5, 115);
@@ -164,11 +172,13 @@ void RedverbGUI::resized()
 	adsrWid->setBounds(10,90,495,225);//this dimension correspond to the display zone.
 	adsrWid->setBaseADSR();
 
+    fileChooserButton->setBounds(400, 70, 24, 24);
 
     // if we've been resized, tell the filter so that it can store the new size
     // in its settings
     getFilter()->lastUIWidth = getWidth();
     getFilter()->lastUIHeight = getHeight();
+
 }
 
 void RedverbGUI::setInfoLabelText(juce::String newText)

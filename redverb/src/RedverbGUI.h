@@ -130,9 +130,20 @@ private:
 	 */
     AdsrWidget* adsrWid;
 
+	/**
+	 * @brief The button to choose the impulse.
+	 * This has to be replaced by a list.
+	 */
+	DrawableButton* fileChooserButton;
 
+	/**
+	 * @brief 
+	 */
+	DrawableImage* impulseChooserNormal;
 
+	DrawableImage* impulseChooserMouseOver;
 
+	DrawableImage* impulseChooserMouseDown;
 
 	/**
 	 * @brief To make the GUI resizable.
